@@ -3,15 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Aidil Farhan | Uprising Data Engineer</title>
+    <title>Aidil Farhan | Uprising Data Engineer</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        /* Particle orbit animation */
+        @keyframes particleOrbit {
+            0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+        }
+        
+        /* Grid movement */
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+        
+        /* Page loader */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #111111;
+            border-top: 3px solid #ff6600;
+            border-radius: 50%;
+            animation: rotateSlow 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loader-text {
+            color: #ff6600;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
+    </style>
 </head>
 <body>
-    <!-- Subtle Grid Background -->
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">LOADING...</div>
+    </div>
+
+    <!-- Grid Background -->
     <div class="grid-background"></div>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shapes"></div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -56,7 +114,7 @@
                         <div class="profile-image">
                             <img src="https://media.licdn.com/dms/image/v2/D4E03AQEPV56aJ4UJnA/profile-displayphoto-shrink_400_400/B4EZqKZ9CCHMAg-/0/1763258655245?e=1767225600&v=beta&t=djn0C3zXdVo5ryET_cgEmD4HcFZcim95ZOssbk6hUJE" alt="Muhammad Aidil Farhan">
                         </div>
-                        <div class="profile-decoration"></div>
+                        <div class="profile-particles"></div>
                     </div>
                 </div>
             </div>
