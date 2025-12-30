@@ -57,18 +57,25 @@
 
         /* --- 4. PAGE SECTIONS LOGIC --- */
         main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
-        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; }
+        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
         .page-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- 5. TYPOGRAPHY & COMMON ELEMENTS --- */
         h1, h2, h3, h4 { color: #fff; }
+        
+        /* FIXED: Improved Title Spacing and Centering */
         h2 {
-            font-size: 2.5rem; text-align: center; margin-bottom: 40px; text-transform: uppercase;
-            border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;
-            position: relative; left: 50%; transform: translateX(-50%);
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin: 0 auto 60px auto; /* Increased bottom margin to prevent overlap */
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary); 
+            display: table; /* Centers the border width to text width */
+            padding-bottom: 15px;
             box-shadow: 0 5px 15px -5px var(--primary-dim);
         }
+
         .glass-card {
             background: var(--card-bg); border: var(--border); padding: 30px; border-radius: 8px;
             transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
@@ -97,7 +104,7 @@
         /* --- 7. ABOUT PAGE & NEW STYLES --- */
         .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         
-        /* Timeline for Education */
+        /* Timeline */
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--primary-dim); }
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
         .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
@@ -119,7 +126,7 @@
         .repo-link { color: var(--primary); text-decoration: none; font-size: 0.9rem; }
         .repo-link:hover { text-decoration: underline; }
 
-        /* Skills & Languages */
+        /* Skills */
         .skill-group { margin-bottom: 20px; }
         .skill-group h4 { margin-bottom: 10px; font-size: 1rem; color: #fff; }
         .skill-badge { display: inline-block; padding: 5px 12px; margin: 3px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px; font-size: 0.8rem; background: rgba(0, 255, 65, 0.05); }
@@ -129,7 +136,12 @@
         .github-graph-container img { max-width: 100%; height: auto; }
 
         /* --- 8. PROJECTS PAGE --- */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .projects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 30px; 
+            margin-top: 20px; /* Added top margin to ensure separation from title */
+        }
         .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
         .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
         .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
