@@ -18,12 +18,7 @@
             --glass: blur(10px);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
 
         body {
             background-color: var(--bg-color);
@@ -36,13 +31,8 @@
 
         /* --- 2. MATRIX BACKGROUND --- */
         #matrix-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.25; 
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; opacity: 0.25;
         }
 
         /* --- 3. NAVIGATION --- */
@@ -50,397 +40,128 @@
             padding: 20px 40px;
             background: rgba(0, 0, 0, 0.85);
             border-bottom: 1px solid rgba(0, 255, 65, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px);
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
         .logo span { color: var(--primary); }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
-
+        .nav-links { list-style: none; display: flex; gap: 30px; }
         .nav-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            letter-spacing: 1px;
-            padding: 5px 0;
-            position: relative;
+            background: none; border: none; color: var(--text-muted); font-size: 0.95rem;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s; letter-spacing: 1px;
+            padding: 5px 0; position: relative;
         }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: var(--primary);
-            text-shadow: 0 0 8px var(--primary);
-        }
-
-        .nav-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
-        }
-
+        .nav-btn:hover, .nav-btn.active { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+        .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
         .nav-btn.active::after { width: 100%; }
 
         /* --- 4. PAGE SECTIONS LOGIC --- */
-        main {
-            flex: 1;
-            position: relative;
-            overflow-y: auto;
-            padding: 40px 20px;
-        }
-
-        .page-section {
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            animation: slideIn 0.5s ease forwards;
-        }
-
+        main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
+        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; }
         .page-section.active { display: block; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- 5. TYPOGRAPHY & COMMON ELEMENTS --- */
-        h1, h2, h3 { color: #fff; }
-        
+        h1, h2, h3, h4 { color: #fff; }
         h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--primary);
-            display: inline-block;
-            padding-bottom: 10px;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            font-size: 2.5rem; text-align: center; margin-bottom: 40px; text-transform: uppercase;
+            border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 10px;
+            position: relative; left: 50%; transform: translateX(-50%);
             box-shadow: 0 5px 15px -5px var(--primary-dim);
         }
-
         .glass-card {
-            background: var(--card-bg);
-            border: var(--border);
-            padding: 30px;
-            border-radius: 8px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            background: var(--card-bg); border: var(--border); padding: 30px; border-radius: 8px;
+            transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
         }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
-            border-color: var(--primary);
-        }
-
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); border-color: var(--primary); }
+        
         /* --- 6. HOME PAGE --- */
-        .home-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 70vh;
-            gap: 50px;
-        }
-
+        .home-container { display: flex; align-items: center; justify-content: space-between; min-height: 70vh; gap: 50px; }
         .home-text { flex: 1; }
-
-        .home-text h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
+        .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
         .home-text .highlight { color: var(--primary); text-shadow: 0 0 10px var(--primary-dim); }
-
-        .home-text p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-
+        .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; max-width: 600px; }
         .cta-btn {
-            padding: 12px 30px;
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 1px;
+            padding: 12px 30px; background: transparent; color: var(--primary); border: 1px solid var(--primary);
+            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; text-decoration: none;
+            display: inline-block; letter-spacing: 1px;
         }
-
-        .cta-btn:hover {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        .home-images {
-            flex: 1;
-            position: relative;
-            height: 500px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-img {
-            width: 280px;
-            height: 400px;
-            object-fit: cover;
-            position: absolute;
-            border: 1px solid rgba(255,255,255,0.2);
-            filter: grayscale(100%);
-            transition: 0.5s;
-            border-radius: 4px;
-        }
-
+        .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
+        .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
+        .hero-img { width: 280px; height: 400px; object-fit: cover; position: absolute; border: 1px solid rgba(255,255,255,0.2); filter: grayscale(100%); transition: 0.5s; border-radius: 4px; }
         .img-1 { transform: rotate(-5deg) translateX(-40px); z-index: 1; }
         .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
+        .hero-img:hover { z-index: 10; filter: grayscale(0%); transform: scale(1.05) rotate(0deg); border-color: var(--primary); box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
 
-        .hero-img:hover {
-            z-index: 10;
-            filter: grayscale(0%);
-            transform: scale(1.05) rotate(0deg);
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
-        }
+        /* --- 7. ABOUT PAGE & NEW STYLES --- */
+        .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        
+        /* Timeline for Education */
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--primary-dim); }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
+        .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
+        .timeline-title { color: #fff; font-size: 1.2rem; font-weight: bold; }
+        .timeline-subtitle { color: var(--text-muted); font-style: italic; margin-bottom: 5px; }
+        .timeline-desc { font-size: 0.95rem; color: #ccc; }
 
-        /* --- 7. ABOUT PAGE --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
+        /* Experience Grid */
+        .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .exp-list { list-style: none; margin-top: 10px; }
+        .exp-list li { margin-bottom: 8px; display: flex; align-items: start; gap: 10px; color: var(--text-muted); font-size: 0.95rem; }
+        .exp-list li i { color: var(--primary); margin-top: 4px; }
 
-        .about-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-muted);
-        }
+        /* Course Table */
+        .course-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .course-table th { text-align: left; color: var(--primary); padding: 10px; border-bottom: 1px solid var(--border); }
+        .course-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+        .course-code { font-family: monospace; color: #fff; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+        .repo-link { color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+        .repo-link:hover { text-decoration: underline; }
 
-        .skill-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            margin: 3px;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            background: rgba(0, 255, 65, 0.05);
-        }
+        /* Skills & Languages */
+        .skill-group { margin-bottom: 20px; }
+        .skill-group h4 { margin-bottom: 10px; font-size: 1rem; color: #fff; }
+        .skill-badge { display: inline-block; padding: 5px 12px; margin: 3px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px; font-size: 0.8rem; background: rgba(0, 255, 65, 0.05); }
+
+        /* GitHub Graph */
+        .github-graph-container { text-align: center; overflow-x: auto; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,0.3); }
+        .github-graph-container img { max-width: 100%; height: auto; }
 
         /* --- 8. PROJECTS PAGE --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .project-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .project-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .click-hint {
-            font-size: 0.8rem;
-            color: var(--primary);
-            margin-top: 10px;
-            opacity: 0;
-            transition: 0.3s;
-        }
-
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
+        .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
         .project-card:hover .click-hint { opacity: 1; }
-
-        /* GITHUB PROMO */
-        .github-promo {
-            margin-top: 60px;
-            text-align: center;
-            padding: 50px 20px;
-            border: 2px dashed var(--primary);
-            background: rgba(0, 255, 65, 0.02);
-            transition: 0.3s;
-        }
-
-        .github-promo:hover {
-            background: rgba(0, 255, 65, 0.05);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
-        }
-
-        .github-icon-large {
-            font-size: 4rem;
-            color: #fff;
-            margin-bottom: 20px;
-            transition: 0.5s;
-            display: inline-block;
-        }
-
-        .github-promo:hover .github-icon-large {
-            color: var(--primary);
-            transform: scale(1.2) rotate(360deg);
-        }
-
+        
+        /* Github Promo */
+        .github-promo { margin-top: 60px; text-align: center; padding: 50px 20px; border: 2px dashed var(--primary); background: rgba(0, 255, 65, 0.02); transition: 0.3s; }
+        .github-promo:hover { background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 30px rgba(0, 255, 65, 0.1); }
+        .github-icon-large { font-size: 4rem; color: #fff; margin-bottom: 20px; transition: 0.5s; display: inline-block; }
+        .github-promo:hover .github-icon-large { color: var(--primary); transform: scale(1.2) rotate(360deg); }
         .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
-        .github-promo p { margin-bottom: 25px; color: var(--text-muted); }
 
         /* --- 9. MODAL STYLES --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            background: #111;
-            border: 1px solid var(--primary);
-            width: 90%;
-            max-width: 700px;
-            padding: 0; /* Remove padding to flush image */
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
-            max-height: 90vh;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* The Image inside Modal */
-        .modal-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-bottom: 1px solid var(--primary);
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px; right: 20px;
-            color: #fff;
-            background: rgba(0,0,0,0.5);
-            width: 35px; height: 35px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 35px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 10;
-        }
-
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
+        .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; padding: 0; border-radius: 10px; position: relative; box-shadow: 0 0 50px rgba(0, 255, 65, 0.2); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--primary); }
+        .modal-body { padding: 30px; }
+        .modal-close { position: absolute; top: 15px; right: 20px; color: #fff; background: rgba(0,0,0,0.5); width: 35px; height: 35px; border-radius: 50%; text-align: center; line-height: 35px; font-size: 1.5rem; cursor: pointer; transition: 0.3s; z-index: 10; }
         .modal-close:hover { background: var(--primary); color: #000; }
-
-        .modal-title {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-
-        .modal-subtitle {
-            color: #fff;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .modal-text {
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
+        .modal-title { color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
+        .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
 
         /* --- 10. CONTACT PAGE --- */
         .contact-wrapper { max-width: 600px; margin: 0 auto; }
-        .contact-info {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .contact-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: 0.3s;
-        }
+        .contact-info { display: flex; justify-content: space-around; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+        .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
         .contact-link:hover { color: #fff; transform: scale(1.1); }
         .form-group { margin-bottom: 20px; }
-        .form-control {
-            width: 100%; padding: 12px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 4px;
-        }
+        .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 4px; }
         .form-control:focus { outline: none; border-color: var(--primary); }
 
         @media (max-width: 768px) {
@@ -448,6 +169,7 @@
             .nav-links { gap: 10px; font-size: 0.8rem; }
             nav { padding: 15px; }
             .hero-img { width: 80%; height: auto; }
+            .course-table { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -469,7 +191,7 @@
         <section id="home" class="page-section active">
             <div class="home-container">
                 <div class="home-text">
-                    <p>Welcome to my digital space</p>
+                    <p>Building my foundation in computer science, one line of code at a time.</p>
                     <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
                     <p>Computer Science student at UTM. Bridging the gap between theory and reality through data, code, and design.</p>
                     <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
@@ -485,42 +207,137 @@
         <section id="about" class="page-section">
             <h2>About Me</h2>
             <p class="about-intro">
-                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience. This approach allows me to bridge the gap between theory and reality.
+                "Every expert was once a beginner. Keep learning, keep growing." <br>
+                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
             </p>
 
-            <div class="about-grid">
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-graduation-cap"></i> Academic Journey</div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 - Present</div>
+                    <div class="timeline-title">Universiti Teknologi Malaysia (UTM)</div>
+                    <div class="timeline-subtitle">Bachelor of Computer Science (Data Engineering) with Honors</div>
+                    <div class="timeline-desc">🏆 Yayasan Sultan Iskandar Scholarship Recipient</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 - 2025</div>
+                    <div class="timeline-title">Johor Matriculation College</div>
+                    <div class="timeline-subtitle">Physical Science • CGPA: 4.00 • MUET: Band 4.5</div>
+                    <div class="timeline-desc">🥈 2nd Place - Educational Comic (National Level, Matech Fest 2024)</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 - 2024</div>
+                    <div class="timeline-title">SMK Layang-Layang</div>
+                    <div class="timeline-subtitle">SPM: 2A+ 4A 2A- 1B+ 1B</div>
+                </div>
+            </div>
+
+            <div class="exp-grid">
                 <div class="glass-card">
-                    <h3><i class="fas fa-graduation-cap" style="color:var(--primary); margin-right: 10px;"></i>Education</h3>
-                    <p><strong>Universiti Teknologi Malaysia</strong> (2025-2029)</p>
-                    <p style="color:#aaa; font-size: 0.9rem; margin-bottom: 15px;">Bachelor of CS (Data Engineering) - 2u2i</p>
-                    <ul style="list-style: none; color: #ccc;">
-                        <li>• SPM: 8 As, 2 Bs</li>
-                        <li>• Matriculation: 4.00 CGPA</li>
+                    <div class="about-section-title"><i class="fas fa-users-cog"></i> Leadership</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-check"></i> Committee Member (Activity) - SUSKOM'25, UTM</li>
+                        <li><i class="fas fa-check"></i> President - Math & Science Club, SMK Layang-Layang (2024)</li>
+                        <li><i class="fas fa-check"></i> Prefect - Spiritual Department (2020-2024)</li>
                     </ul>
                 </div>
 
                 <div class="glass-card">
-                    <h3><i class="fas fa-code" style="color:var(--primary); margin-right: 10px;"></i>Technical Skills</h3>
-                    <div style="margin-top: 15px;">
-                        <span class="skill-badge">C++</span>
-                        <span class="skill-badge">Java</span>
-                        <span class="skill-badge">Python</span>
-                        <span class="skill-badge">HTML/CSS</span>
-                        <span class="skill-badge">Canva</span>
-                        <span class="skill-badge">Photoshop</span>
-                    </div>
+                    <div class="about-section-title"><i class="fas fa-trophy"></i> Competitions</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-medal"></i> 1st Place - Math Olympiad, Johor Matriculation</li>
+                        <li><i class="fas fa-medal"></i> 2nd Place - Educational Comic, Matech Fest 2024</li>
+                        <li><i class="fas fa-dot-circle"></i> Participant - SULAM UTHM Python for Data Analysts</li>
+                    </ul>
                 </div>
 
                 <div class="glass-card">
-                    <h3><i class="fas fa-users" style="color:var(--primary); margin-right: 10px;"></i>Soft Skills</h3>
-                    <div style="margin-top: 15px;">
-                        <span class="skill-badge">Communication</span>
-                        <span class="skill-badge">Leadership</span>
-                        <span class="skill-badge">Problem-solving</span>
-                        <span class="skill-badge">Adaptability</span>
-                    </div>
+                    <div class="about-section-title"><i class="fas fa-industry"></i> Engagement</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-microphone"></i> Pittsburgh Paint Company (PPG) Talk</li>
+                        <li><i class="fas fa-microphone"></i> ASEAN Quantum Summits Seminar</li>
+                        <li><i class="fas fa-microphone"></i> Festival of Ideas (FOI) Putrajaya</li>
+                    </ul>
                 </div>
             </div>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-book"></i> Current Coursework</div>
+                <div style="overflow-x: auto;">
+                    <table class="course-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Subject</th>
+                                <th>Repository</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="course-code">SECR1013</span></td>
+                                <td>Digital Logic</td>
+                                <td><a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECR1013-Digital-Logic" target="_blank" class="repo-link">🔗 View</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="course-code">SECP1513</span></td>
+                                <td>Tech & Info Systems</td>
+                                <td><a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECP1513-Technology%20%26%20Information%20System" target="_blank" class="repo-link">🔗 View</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="course-code">SECJ1013</span></td>
+                                <td>Programming Tech 1</td>
+                                <td><a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECJ1013-Programming-1" target="_blank" class="repo-link">🔗 View</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="course-code">SECI1013</span></td>
+                                <td>Discrete Structure</td>
+                                <td><a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECI1013-Discrete-Structure" target="_blank" class="repo-link">🔗 View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-laptop-code"></i> Technical Arsenal</div>
+                
+                <div class="skill-group">
+                    <h4>Programming & Tools</h4>
+                    <span class="skill-badge">C++</span>
+                    <span class="skill-badge">Python</span>
+                    <span class="skill-badge">Java</span>
+                    <span class="skill-badge">VS Code</span>
+                    <span class="skill-badge">MS Office</span>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Creative Software</h4>
+                    <span class="skill-badge">Canva</span>
+                    <span class="skill-badge">Clip Studio Paint</span>
+                    <span class="skill-badge">Krita</span>
+                    <span class="skill-badge">Photoshop</span>
+                    <span class="skill-badge">CapCut</span>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Languages</h4>
+                    <span class="skill-badge">Malay (Fluent)</span>
+                    <span class="skill-badge">English (Fluent)</span>
+                    <span class="skill-badge">Indonesian (Fluent)</span>
+                    <span class="skill-badge">Learning: Japanese, Korean, Arabic, Mandarin</span>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                 <div class="about-section-title"><i class="fab fa-github"></i> GitHub Activity</div>
+                 <div class="github-graph-container">
+                     <img src="https://github-readme-activity-graph.vercel.app/graph?username=farhanaidil2026-ui&theme=github-compact&hide_border=true&area=true" alt="GitHub Activity Graph">
+                 </div>
+            </div>
+
         </section>
 
         <section id="projects" class="page-section">
@@ -625,24 +442,24 @@
             }
         }
 
-        // --- 2. MODAL DATA (WITH IMAGES) ---
-        // Change the 'image' URLs below to your actual images
+        // --- 2. MODAL DATA ---
+        // REPLACE IMAGE URLs WITH YOUR OWN
         const projectData = {
             1: {
                 title: "Design Thinking Project",
-                image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
+                image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800", 
                 summary: "This project focused on designing a system to regulate library and study space utilization at UTM. We identified overcrowding issues and proposed a digital reservation system.",
                 reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
             },
             2: {
                 title: "E-Portfolio Website",
-                image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
+                image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
                 summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
                 reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence in CSS Grid and Flexbox. It serves as a living document of my growth."
             },
             3: {
                 title: "ASEAN Quantum Summit",
-                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800",
                 summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
                 reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds—problems that take classical computers days—was inspiring. It motivated me to study linear algebra more deeply."
             }
@@ -650,7 +467,7 @@
 
         function openModal(id) {
             const data = projectData[id];
-            document.getElementById('modal-image').src = data.image; // Set the image
+            document.getElementById('modal-image').src = data.image; 
             document.getElementById('modal-title').innerText = data.title;
             document.getElementById('modal-summary').innerText = data.summary;
             document.getElementById('modal-reflection').innerText = data.reflection;
