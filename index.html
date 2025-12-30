@@ -42,7 +42,7 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            opacity: 0.25; /* Visible but not distracting */
+            opacity: 0.25; 
         }
 
         /* --- 3. NAVIGATION --- */
@@ -304,12 +304,12 @@
 
         .project-card:hover .click-hint { opacity: 1; }
 
-        /* --- NEW: GITHUB CTA SECTION --- */
+        /* GITHUB PROMO */
         .github-promo {
             margin-top: 60px;
             text-align: center;
             padding: 50px 20px;
-            border: 2px dashed var(--primary); /* Dashed border style */
+            border: 2px dashed var(--primary);
             background: rgba(0, 255, 65, 0.02);
             transition: 0.3s;
         }
@@ -354,24 +354,44 @@
             border: 1px solid var(--primary);
             width: 90%;
             max-width: 700px;
-            padding: 40px;
+            padding: 0; /* Remove padding to flush image */
             border-radius: 10px;
             position: relative;
             box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
             max-height: 90vh;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* The Image inside Modal */
+        .modal-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .modal-body {
+            padding: 30px;
         }
 
         .modal-close {
             position: absolute;
-            top: 20px; right: 20px;
+            top: 15px; right: 20px;
             color: #fff;
+            background: rgba(0,0,0,0.5);
+            width: 35px; height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
             font-size: 1.5rem;
             cursor: pointer;
             transition: 0.3s;
+            z-index: 10;
         }
 
-        .modal-close:hover { color: var(--primary); }
+        .modal-close:hover { background: var(--primary); color: #000; }
 
         .modal-title {
             color: var(--primary);
@@ -396,7 +416,6 @@
 
         /* --- 10. CONTACT PAGE --- */
         .contact-wrapper { max-width: 600px; margin: 0 auto; }
-        
         .contact-info {
             display: flex;
             justify-content: space-around;
@@ -404,7 +423,6 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-
         .contact-link {
             display: flex;
             flex-direction: column;
@@ -413,10 +431,8 @@
             text-decoration: none;
             transition: 0.3s;
         }
-
         .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
         .contact-link:hover { color: #fff; transform: scale(1.1); }
-
         .form-group { margin-bottom: 20px; }
         .form-control {
             width: 100%; padding: 12px;
@@ -557,7 +573,6 @@
                     Visit My GitHub
                 </a>
             </div>
-
         </section>
 
         <section id="contact" class="page-section">
@@ -583,13 +598,18 @@
     <div id="project-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal(event)">&times;</span>
-            <h2 id="modal-title" class="modal-title" style="text-align: left; border: none; margin: 0; box-shadow: none; left: 0; transform: none;">Project Title</h2>
             
-            <div class="modal-subtitle">Summary</div>
-            <p id="modal-summary" class="modal-text">Project summary goes here.</p>
-            
-            <div class="modal-subtitle">Personal Reflection</div>
-            <p id="modal-reflection" class="modal-text">Personal reflection goes here.</p>
+            <img id="modal-image" class="modal-img" src="" alt="Project Image">
+
+            <div class="modal-body">
+                <h2 id="modal-title" class="modal-title" style="text-align: left; border: none; margin: 0; box-shadow: none; left: 0; transform: none;">Project Title</h2>
+                
+                <div class="modal-subtitle">Summary</div>
+                <p id="modal-summary" class="modal-text">Project summary goes here.</p>
+                
+                <div class="modal-subtitle">Personal Reflection</div>
+                <p id="modal-reflection" class="modal-text">Personal reflection goes here.</p>
+            </div>
         </div>
     </div>
 
@@ -598,31 +618,31 @@
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
             document.getElementById(pageId).classList.add('active');
-            
             const buttons = document.querySelectorAll('.nav-btn');
             for(let btn of buttons) {
-                if(btn.textContent.toLowerCase() === pageId) {
-                    btn.classList.add('active');
-                }
+                if(btn.textContent.toLowerCase() === pageId) btn.classList.add('active');
             }
         }
 
-        // --- 2. MODAL DATA & LOGIC ---
+        // --- 2. MODAL DATA (WITH IMAGES) ---
+        // Change the 'image' URLs below to your actual images
         const projectData = {
             1: {
                 title: "Design Thinking Project",
+                image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
                 summary: "This project focused on designing a system to regulate library and study space utilization at UTM. We identified overcrowding issues and proposed a digital reservation system.",
                 reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
             },
             2: {
                 title: "E-Portfolio Website",
+                image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
                 summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
                 reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence in CSS Grid and Flexbox. It serves as a living document of my growth."
             },
             3: {
                 title: "ASEAN Quantum Summit",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800", // CHANGE THIS
                 summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
                 reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds—problems that take classical computers days—was inspiring. It motivated me to study linear algebra more deeply."
             }
@@ -630,6 +650,7 @@
 
         function openModal(id) {
             const data = projectData[id];
+            document.getElementById('modal-image').src = data.image; // Set the image
             document.getElementById('modal-title').innerText = data.title;
             document.getElementById('modal-summary').innerText = data.summary;
             document.getElementById('modal-reflection').innerText = data.reflection;
@@ -645,38 +666,24 @@
         // --- 3. MATRIX ANIMATION ---
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-
         const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/-+*';
         const charArray = chars.split('');
         const fontSize = 15;
         let columns = canvas.width / fontSize;
         let drops = [];
-
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.random() * -50; 
-        }
-
+        for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
         function drawMatrix() {
             ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.fillStyle = '#00ff41'; 
             ctx.font = fontSize + 'px monospace';
-
             for (let i = 0; i < drops.length; i++) {
                 const text = charArray[Math.floor(Math.random() * charArray.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
-                    drops[i] = 0;
-                }
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
                 drops[i]++;
             }
         }
