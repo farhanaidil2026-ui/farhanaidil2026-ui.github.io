@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aidil Farhan | Data Engineering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 20, 0.7);
+            --primary: #00ff41; /* Matrix Green */
+            --primary-dim: rgba(0, 255, 65, 0.1);
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border: 1px solid rgba(0, 255, 65, 0.2);
+            --glass: blur(10px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- MATRIX BACKGROUND --- */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind everything */
+            opacity: 0.15; /* Dimmed so text is readable */
+        }
+
+        /* --- LAYOUT & TYPOGRAPHY --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--primary-dim);
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 15px auto;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        section {
+            padding: 80px 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: var(--glass);
+            z-index: 1000;
+            border-bottom: var(--border);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 8px var(--primary);
+        }
+
+        /* --- HOME SECTION --- */
+        #home {
+            padding-top: 120px;
+            text-align: left;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .home-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .home-text .highlight {
+            color: var(--primary);
+        }
+
+        .home-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .image-showcase {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        /* The two big pictures logic */
+        .hero-img {
+            width: 250px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 5px;
+            filter: grayscale(100%);
+            transition: 0.5s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-img.primary {
+            transform: translateY(0);
+        }
+        
+        .hero-img.secondary {
+            transform: translateY(40px); /* Offset effect */
+        }
+
+        .hero-img:hover {
+            filter: grayscale(0%);
+            border-color: var(--primary);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            z-index: 2;
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-desc {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass);
+            padding: 30px;
+            border-radius: 10px;
+            border: var(--border);
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .icon-box {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .glass-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .info-list {
+            list-style: none;
+            color: var(--text-muted);
+        }
+
+        .info-list li {
+            margin-bottom: 10px;
+        }
+
+        .info-list strong {
+            color: #fff;
+        }
+
+        /* Chips for skills */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .project-card {
+            background: var(--card-bg);
+            border: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .project-content p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            margin-top: auto;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tech-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* --- CONTACT SECTION --- */
+        #contact {
+            text-align: center;
+        }
+
+        .contact-simple {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            border: var(--border);
+        }
+
+        .contact-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .contact-item:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: #000;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .home-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .image-showcase {
+                justify-content: center;
+                margin-top: 30px;
+            }
+
+            .hero-img {
+                width: 45%;
+                height: 300px;
+            }
+
+            .nav-links {
+                display: none; /* Hide nav on mobile for simplicity in this demo */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">&lt;Aidil<span>Farhan</span>/&gt;</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="container home-grid">
+            <div class="home-text">
+                <p>Hello, I am</p>
+                <h1>Aidil Farhan <br><span class="highlight">Data Engineer</span></h1>
+                <p>Computer Science student at UTM. Bridging the gap between theory and reality through data, code, and design.</p>
+                <a href="#projects" class="cta-btn">View My Work</a>
+            </div>
+            
+            <div class="image-showcase">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=800" alt="Aidil Farhan" class="hero-img primary">
+                
+                <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=800" alt="Workspace" class="hero-img secondary">
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p class="about-desc">
+                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience. This approach allows me to bridge the gap between theory and reality.
+            </p>
+
+            <div class="cards-grid">
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Education</h3>
+                    <ul class="info-list">
+                        <li><strong>Universiti Teknologi Malaysia (2025-2029)</strong><br>Bachelor of Computer Science (Data Engineering) with Honors (2u2i)</li>
+                        <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                        <li><strong>SPM:</strong> 8 As, 2 Bs</li>
+                        <li><strong>Matriculation:</strong> 4.00 CGPA</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-code"></i></div>
+                    <h3>Technical Skills</h3>
+                    <div class="skill-tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">Canva</span>
+                        <span class="tag">Photoshop</span>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="icon-box"><i class="fas fa-users"></i></div>
+                    <h3>Soft Skills</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Communication</span>
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Problem-solving</span>
+                        <span class="tag">Adaptability</span>
+                        <span class="tag">Time Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Projects & Reflections</h2>
+            <div class="cards-grid">
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Design Thinking Project</h3>
+                        <p>System to regulate library and study space utilization at UTM.</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Canva</span>
+                            <span class="tech-badge">Design Thinking</span>
+                            <span class="tech-badge">Prototyping</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>E-Portfolio Website</h3>
+                        <p>A compilation of projects and reflections. (The website you are looking at now!)</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">HTML</span>
+                            <span class="tech-badge">CSS</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">GitHub</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>ASEAN Quantum Summit</h3>
+                        <p>Insights on quantum computing transforming Johor.</p>
+                        <div class="tech-stack">
+                            <span class="tech-badge">Research</span>
+                            <span class="tech-badge">Reflection</span>
+                            <span class="tech-badge">Future Tech</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-simple">
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Have a question or want to work together? I'm just an email away.</p>
+                
+                <div class="contact-row">
+                    <a href="mailto:farhanaidil2026@gmail.com" class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Me</span>
+                    </a>
+                    <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+
+                <a href="mailto:farhanaidil2026@gmail.com" class="cta-btn">Say Hello</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Aidil Farhan. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- MATRIX RAIN ANIMATION ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas to full screen
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Matrix characters (Katakana + Latin)
+        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const charArray = chars.split('');
+
+        const fontSize = 16;
+        let columns = canvas.width / fontSize;
+        
+        // Array to track the y position of drops for each column
+        let drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            // Black background with slight opacity for trail effect
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; // Green text
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                
+                // x = column index * font size, y = drop value * font size
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Randomly reset drop to top after it crosses screen
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        // Run animation
+        setInterval(drawMatrix, 33);
+
+        // Update columns on resize
+        window.addEventListener('resize', () => {
+            columns = canvas.width / fontSize;
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+        });
+
+        // --- SMOOTH SCROLLING ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
