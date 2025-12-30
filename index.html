@@ -64,16 +64,21 @@
         /* --- 5. TYPOGRAPHY & COMMON ELEMENTS --- */
         h1, h2, h3, h4 { color: #fff; }
         
-        /* FIXED: Improved Title Spacing and Centering */
+        /* --- FIXED TITLE STYLING (No Overlap) --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px; /* Force distinct space between title and content */
+            width: 100%;
+        }
+
         h2 {
             font-size: 2.5rem; 
-            text-align: center; 
-            margin: 0 auto 60px auto; /* Increased bottom margin to prevent overlap */
             text-transform: uppercase;
             border-bottom: 2px solid var(--primary); 
-            display: table; /* Centers the border width to text width */
+            display: inline-block; /* Allows border to fit text */
             padding-bottom: 15px;
             box-shadow: 0 5px 15px -5px var(--primary-dim);
+            margin: 0; /* Margin handled by parent .section-header */
         }
 
         .glass-card {
@@ -101,7 +106,7 @@
         .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
         .hero-img:hover { z-index: 10; filter: grayscale(0%); transform: scale(1.05) rotate(0deg); border-color: var(--primary); box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
 
-        /* --- 7. ABOUT PAGE & NEW STYLES --- */
+        /* --- 7. ABOUT PAGE STYLES --- */
         .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         
         /* Timeline */
@@ -140,7 +145,7 @@
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
             gap: 30px; 
-            margin-top: 20px; /* Added top margin to ensure separation from title */
+            margin-top: 20px; 
         }
         .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
         .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
@@ -217,7 +222,10 @@
         </section>
 
         <section id="about" class="page-section">
-            <h2>About Me</h2>
+            <div class="section-header">
+                <h2>About Me</h2>
+            </div>
+            
             <p class="about-intro">
                 "Every expert was once a beginner. Keep learning, keep growing." <br>
                 I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
@@ -353,7 +361,9 @@
         </section>
 
         <section id="projects" class="page-section">
-            <h2>Projects & Reflections</h2>
+            <div class="section-header">
+                <h2>Projects & Reflections</h2>
+            </div>
             
             <div class="projects-grid">
                 <div class="glass-card project-card" onclick="openModal(1)">
@@ -405,7 +415,9 @@
         </section>
 
         <section id="contact" class="page-section">
-            <h2>Get In Touch</h2>
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+            </div>
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <a href="mailto:farhanaidil2026@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
