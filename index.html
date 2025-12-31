@@ -17,6 +17,9 @@
             --text-muted: #a0a0a0;
             --border: 1px solid rgba(0, 255, 65, 0.3);
             --glass: blur(10px);
+            /* Image URLs for Glitch Effect */
+            --img-1-url: url('https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_7_2025-12-30_20-50-34.jpg?raw=true');
+            --img-2-url: url('https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true');
             transition: --primary 0.2s, --border 0.2s; /* Smooth transition for color swap */
         }
 
@@ -154,10 +157,72 @@
         }
         .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
         .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
-        .hero-img { width: 280px; height: 400px; object-fit: cover; position: absolute; border: 1px solid rgba(255,255,255,0.2); filter: grayscale(100%); transition: 0.5s; border-radius: 4px; }
-        .img-1 { transform: rotate(-5deg) translateX(-40px); z-index: 1; }
-        .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
-        .hero-img:hover { z-index: 10; filter: grayscale(0%); transform: scale(1.05) rotate(0deg); border-color: var(--primary); box-shadow: 0 0 30px var(--primary-dim); }
+        
+        /* Updated Hero Image Styles for Glitch Swap */
+        .hero-img { 
+            width: 280px; height: 400px; 
+            position: absolute; 
+            border: 1px solid rgba(255,255,255,0.2); 
+            filter: grayscale(100%); 
+            transition: 0.5s; 
+            border-radius: 4px; 
+            background-size: cover;
+            background-position: center;
+        }
+        .img-1 { 
+            transform: rotate(-5deg) translateX(-40px); 
+            z-index: 1; 
+            background-image: var(--img-1-url);
+        }
+        .img-2 { 
+            transform: rotate(5deg) translateX(40px) translateY(20px); 
+            z-index: 2; 
+            background-image: var(--img-2-url);
+        }
+        
+        /* Image Swap Animations */
+        @keyframes glitch-swap-1 {
+            0% { background-image: var(--img-1-url); }
+            10% { background-image: var(--img-2-url); }
+            20% { background-image: var(--img-1-url); }
+            30% { background-image: var(--img-2-url); filter: invert(1); }
+            40% { background-image: var(--img-1-url); filter: none; }
+            50% { background-image: var(--img-2-url); }
+            60% { background-image: var(--img-1-url); }
+            70% { background-image: var(--img-2-url); }
+            80% { background-image: var(--img-1-url); }
+            90% { background-image: var(--img-2-url); }
+            100% { background-image: var(--img-1-url); }
+        }
+        @keyframes glitch-swap-2 {
+            0% { background-image: var(--img-2-url); }
+            10% { background-image: var(--img-1-url); }
+            20% { background-image: var(--img-2-url); }
+            30% { background-image: var(--img-1-url); filter: invert(1); }
+            40% { background-image: var(--img-2-url); filter: none; }
+            50% { background-image: var(--img-1-url); }
+            60% { background-image: var(--img-2-url); }
+            70% { background-image: var(--img-1-url); }
+            80% { background-image: var(--img-2-url); }
+            90% { background-image: var(--img-1-url); }
+            100% { background-image: var(--img-2-url); }
+        }
+
+        .hero-img:hover { 
+            z-index: 10; 
+            filter: grayscale(0%); 
+            transform: scale(1.05) rotate(0deg); 
+            border-color: var(--primary); 
+            box-shadow: 0 0 30px var(--primary-dim); 
+        }
+        
+        /* Apply Glitch Swap on Hover */
+        .img-1:hover {
+            animation: glitch-anim 0.3s infinite, glitch-swap-1 0.5s steps(1) forwards;
+        }
+        .img-2:hover {
+            animation: glitch-anim 0.3s infinite, glitch-swap-2 0.5s steps(1) forwards;
+        }
 
         /* --- 7. ABOUT PAGE STYLES --- */
         .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
@@ -259,7 +324,7 @@
     <canvas id="matrix-canvas"></canvas>
 
     <nav>
-        <a href="#" class="logo" onclick="showPage('home')">&lt;Aidil<span>Farhan</span>/&gt;</a>
+        <a href="#" class="logo" onclick="showPage('home')">Aidil<span>Farhan</span></a>
         <ul class="nav-links">
             <li><button class="nav-btn active" onclick="showPage('home')">Home</button></li>
             <li><button class="nav-btn" onclick="showPage('about')">About</button></li>
@@ -279,8 +344,8 @@
                 </div>
                 
                 <div class="home-images">
-                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_7_2025-12-30_20-50-34.jpg?raw=true" class="hero-img img-1" alt="Profile 1">
-                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true" class="hero-img img-2" alt="Profile 2">
+                    <div class="hero-img img-1"></div>
+                    <div class="hero-img img-2"></div>
                 </div>
             </div>
         </section>
