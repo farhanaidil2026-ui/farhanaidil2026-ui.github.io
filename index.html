@@ -6,29 +6,29 @@
     <title>Aidil Farhan | Data Engineering</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-
+        /* --- 1. RESET & VARIABLES --- */
         :root {
             --bg-color: #050505;
             --card-bg: rgba(20, 20, 20, 0.85);
-
+            /* Default Green Theme */
             --primary: #00ff41; 
             --primary-dim: rgba(0, 255, 65, 0.1);
             --text-main: #e0e0e0;
             --text-muted: #a0a0a0;
             --border: 1px solid rgba(0, 255, 65, 0.3);
             --glass: blur(10px);
-            transition: --primary 0.2s, --border 0.2s;
+            transition: --primary 0.2s, --border 0.2s; /* Smooth transition for color swap */
         }
 
-
+        /* Red Glitch Mode Class (Toggled by JS) */
         .glitch-mode {
-            --primary: #ff003c;
+            --primary: #ff003c; /* Cyber Red */
             --primary-dim: rgba(255, 0, 60, 0.15);
             --border: 1px solid rgba(255, 0, 60, 0.4);
-            transition: none;
+            transition: none; /* Instant color change for glitch */
         }
         
-
+        /* GLITCH ANIMATION KEYFRAMES */
         @keyframes glitch {
             0% { clip-path: inset(80% 0 0 0); transform: translate(-2px, -2px); }
             10% { clip-path: inset(10% 0 85% 0); transform: translate(2px, 2px); }
@@ -43,7 +43,7 @@
             100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
         }
 
-
+        /* Glitch Effect Layers */
         .glitch-mode body::before,
         .glitch-mode body::after {
             content: '';
@@ -58,13 +58,13 @@
 
         .glitch-mode body::before {
             animation: glitch 0.4s infinite linear alternate-reverse;
-            background: rgba(255, 0, 60, 0.2);
+            background: rgba(255, 0, 60, 0.2); /* Red tint */
             transform: translate(-3px, 0);
         }
         
         .glitch-mode body::after {
             animation: glitch 0.4s infinite linear alternate;
-            background: rgba(0, 255, 255, 0.2);
+            background: rgba(0, 255, 255, 0.2); /* Cyan tint for contrast */
             transform: translate(3px, 0);
         }
 
@@ -80,17 +80,17 @@
             flex-direction: column;
         }
 
-
+        /* --- 2. MATRIX BACKGROUND --- */
         #matrix-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; opacity: 0.25;
         }
 
-
+        /* --- 3. NAVIGATION --- */
         nav {
             padding: 20px 40px;
             background: rgba(0, 0, 0, 0.85);
-            border-bottom: 1px solid var(--primary-dim); 
+            border-bottom: 1px solid var(--primary-dim); /* Linked to variable */
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px);
             transition: border-bottom 0.2s;
@@ -107,13 +107,13 @@
         .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
         .nav-btn.active::after { width: 100%; }
 
-
+        /* --- 4. PAGE SECTIONS LOGIC --- */
         main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
         .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
         .page-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-
+        /* --- 5. TYPOGRAPHY & COMMON ELEMENTS --- */
         h1, h2, h3, h4 { color: #fff; }
         
         .section-header {
@@ -141,7 +141,7 @@
         }
         .glass-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--primary-dim); border-color: var(--primary); }
         
-
+        /* --- 6. HOME PAGE --- */
         .home-container { display: flex; align-items: center; justify-content: space-between; min-height: 70vh; gap: 50px; }
         .home-text { flex: 1; }
         .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
@@ -155,7 +155,7 @@
         .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
         .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
         
-
+        /* RESTORED HERO IMAGE STYLES */
         .hero-img { 
             width: 280px; height: 400px; 
             object-fit: cover; 
@@ -176,10 +176,10 @@
             box-shadow: 0 0 30px var(--primary-dim); 
         }
         
-
+        /* --- 7. ABOUT PAGE STYLES --- */
         .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
         
-
+        /* Timeline */
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--primary-dim); transition: border-left 0.2s; }
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); transition: background 0.2s, box-shadow 0.2s; }
         .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; transition: color 0.2s; }
@@ -187,22 +187,22 @@
         .timeline-subtitle { color: var(--text-muted); font-style: italic; margin-bottom: 5px; }
         .timeline-desc { font-size: 0.95rem; color: #ccc; }
 
-
+        /* Experience Grid */
         .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .exp-list { list-style: none; margin-top: 10px; }
         .exp-list li { margin-bottom: 8px; display: flex; align-items: start; gap: 10px; color: var(--text-muted); font-size: 0.95rem; }
         .exp-list li i { color: var(--primary); margin-top: 4px; transition: color 0.2s; }
 
-
+        /* Skills */
         .skill-group { margin-bottom: 20px; }
         .skill-group h4 { margin-bottom: 10px; font-size: 1rem; color: #fff; }
         .skill-badge { display: inline-block; padding: 5px 12px; margin: 3px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px; font-size: 0.8rem; background: rgba(0, 255, 65, 0.05); transition: color 0.2s, border 0.2s; }
 
-
+        /* GitHub Graph */
         .github-graph-container { text-align: center; overflow-x: auto; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,0.3); }
         .github-graph-container img { max-width: 100%; height: auto; }
 
-
+        /* --- 8. PROJECTS PAGE --- */
         .projects-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
@@ -215,7 +215,7 @@
         .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
         .project-card:hover .click-hint { opacity: 1; }
         
-
+        /* Github Promo */
         .github-promo { 
             margin-top: 120px; 
             text-align: center; 
@@ -230,7 +230,7 @@
         .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
         .github-promo .cta-btn { margin-top: 40px; }
 
-
+        /* --- NEW: COURSEWORK SECTION STYLES --- */
         .year-tabs {
             display: flex;
             justify-content: center;
@@ -312,6 +312,7 @@
         }
         .subject-link:hover { text-decoration: underline; }
 
+        /* --- 9. MODAL STYLES --- */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
         .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; padding: 0; border-radius: 10px; position: relative; box-shadow: 0 0 50px var(--primary-dim); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
         .modal-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--primary); }
@@ -322,6 +323,7 @@
         .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
         .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
 
+        /* --- 10. CONTACT PAGE --- */
         .contact-wrapper { max-width: 600px; margin: 0 auto; }
         .contact-info { display: flex; justify-content: space-around; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
         .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
@@ -358,9 +360,9 @@
         <section id="home" class="page-section active">
             <div class="home-container">
                 <div class="home-text">
-                    <p>Greetings</p>
+                    <p>Building my foundation in computer science, one line of code at a time.</p>
                     <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
-                    <p>Computer Science (Data Engineering) student at UTM.</p>
+                    <p>Computer Science (Data Engineering) student at UTM. Turning dreams into reality.</p>
                     <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
                 </div>
                 
@@ -377,6 +379,7 @@
             </div>
             
             <p class="about-intro">
+                "Every expert was once a beginner. Keep learning, keep growing." <br>
                 I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
             </p>
 
@@ -405,9 +408,9 @@
                 <div class="glass-card">
                     <div class="about-section-title"><i class="fas fa-users-cog"></i> Leadership</div>
                     <ul class="exp-list">
-                        <li><i class="fas fa-check"></i> Committee Member in Activity Department - SUSKOM'25, UTM</li>
-                        <li><i class="fas fa-check"></i> President of Math & Science Club - SMK Layang-Layang (2024)</li>
-                        <li><i class="fas fa-check"></i> Prefect in Spiritual Department - SMK Layang-Layang (2020-2024)</li>
+                        <li><i class="fas fa-check"></i> Committee Member (Activity) - SUSKOM'25, UTM</li>
+                        <li><i class="fas fa-check"></i> President - Math & Science Club, SMK Layang-Layang (2024)</li>
+                        <li><i class="fas fa-check"></i> Prefect - Spiritual Department (2020-2024)</li>
                     </ul>
                 </div>
                 <div class="glass-card">
@@ -487,7 +490,7 @@
                         </div>
                         <div class="subject-card">
                             <span class="subject-code">SECP1513</span>
-                            <div class="subject-name">Technology & Information Systems</div>
+                            <div class="subject-name">Tech & Info Systems</div>
                             <p class="subject-desc">Foundational concepts of information systems, IT infrastructure, and the role of technology in business.</p>
                             <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECP1513-Technology%20%26%20Information%20System" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
                         </div>
@@ -677,7 +680,7 @@
     </div>
 
     <script>
-
+        // --- 1. PAGE SWITCHING ---
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -688,24 +691,24 @@
             }
         }
 
-
+        // --- NEW: YEAR TAB SWITCHING ---
         function openYear(evt, yearName) {
-
+            // Hide all year content
             const yearContents = document.getElementsByClassName("year-content");
             for (let i = 0; i < yearContents.length; i++) {
                 yearContents[i].classList.remove("active");
             }
-
+            // Deactivate all tab buttons
             const yearBtns = document.getElementsByClassName("year-btn");
             for (let i = 0; i < yearBtns.length; i++) {
                 yearBtns[i].classList.remove("active");
             }
-
+            // Show current year and activate button
             document.getElementById(yearName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
-
+        // --- 2. MODAL DATA ---
         const projectData = {
             1: {
                 title: "Design Thinking Project",
@@ -717,13 +720,13 @@
                 title: "E-Portfolio Website",
                 image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
                 summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
-                reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence in CSS Grid and Flexbox. It serves as a living document of my growth."
+                reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence. It serves as a living document of my growth."
             },
             3: {
                 title: "ASEAN Quantum Summit",
                 image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true",
                 summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
-                reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds—problems that take classical computers days—was inspiring. It motivated me to study linear algebra more deeply."
+                reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds, problems that take classical computers days was inspiring. It motivated me to study linear algebra more deeply."
             }
         };
 
@@ -742,10 +745,10 @@
             }
         }
 
-
+        // --- 3. MATRIX ANIMATION WITH GLITCH ---
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-        let matrixColor = '#00ff41';
+        let matrixColor = '#00ff41'; // Default Green
 
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
@@ -772,7 +775,7 @@
         }
         setInterval(drawMatrix, 40);
 
-
+        // --- 4. RANDOM GLITCH LOGIC (GREEN -> RED -> GREEN) ---
         function triggerGlitch() {
             const glitchDuration = Math.random() * 1800 + 200; 
             document.documentElement.classList.add('glitch-mode');
