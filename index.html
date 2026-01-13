@@ -185,6 +185,34 @@
         .github-graph-container { text-align: center; overflow-x: auto; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,0.3); }
         .github-graph-container img { max-width: 100%; height: auto; }
 
+        /* NEW GALLERY STYLES */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--primary-dim);
+            position: relative;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s, filter 0.4s;
+            filter: grayscale(80%);
+        }
+        .gallery-item:hover { border-color: var(--primary); }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
         .projects-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
@@ -302,11 +330,18 @@
         .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
         .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
 
-        .contact-wrapper { max-width: 600px; margin: 0 auto; }
-        .contact-info { display: flex; justify-content: space-around; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; }
+        .contact-wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
         .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; transition: color 0.2s; }
         .contact-link:hover { color: #fff; transform: scale(1.1); }
+        
+        /* Updated Contact Layout with Image */
+        .contact-content-box { display: flex; gap: 30px; flex-wrap: wrap; }
+        .contact-visual { flex: 1; min-width: 300px; height: 400px; background-image: url('https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=500&auto=format&fit=crop&q=60'); background-size: cover; background-position: center; border-radius: 8px; border: 1px solid var(--primary-dim); filter: grayscale(100%); transition: 0.5s; }
+        .contact-visual:hover { filter: grayscale(0%); border-color: var(--primary); }
+        .contact-form-container { flex: 1; min-width: 300px; }
+        
         .form-group { margin-bottom: 20px; }
         .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 4px; }
         .form-control:focus { outline: none; border-color: var(--primary); }
@@ -316,6 +351,8 @@
             .nav-links { gap: 10px; font-size: 0.8rem; }
             nav { padding: 15px; }
             .hero-img { width: 80%; height: auto; }
+            .contact-content-box { flex-direction: column; }
+            .contact-visual { height: 200px; }
         }
     </style>
 </head>
@@ -379,6 +416,25 @@
                     <div class="timeline-date">2019 - 2024</div>
                     <div class="timeline-title">SMK Layang-Layang</div>
                     <div class="timeline-subtitle">SPM: 2A+ 4A 2A- 1B+ 1B</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&auto=format&fit=crop&q=60" alt="Campus Life">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&auto=format&fit=crop&q=60" alt="Coding Session">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1592280771884-f35d2595dc0f?w=500&auto=format&fit=crop&q=60" alt="Event">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60" alt="Group Study">
+                    </div>
                 </div>
             </div>
 
@@ -673,13 +729,19 @@
                     <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
                     <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-link"><i class="fab fa-github"></i><span>GitHub</span></a>
                 </div>
+                
                 <div class="glass-card">
-                    <form onsubmit="event.preventDefault(); alert('Message sent!');">
-                        <div class="form-group"><label>Name</label><input type="text" class="form-control"></div>
-                        <div class="form-group"><label>Email</label><input type="email" class="form-control"></div>
-                        <div class="form-group"><label>Message</label><textarea rows="5" class="form-control"></textarea></div>
-                        <button class="cta-btn" style="width: 100%;">Send Message</button>
-                    </form>
+                    <div class="contact-content-box">
+                        <div class="contact-visual"></div>
+                        <div class="contact-form-container">
+                            <form onsubmit="event.preventDefault(); alert('Message sent!');">
+                                <div class="form-group"><label>Name</label><input type="text" class="form-control"></div>
+                                <div class="form-group"><label>Email</label><input type="email" class="form-control"></div>
+                                <div class="form-group"><label>Message</label><textarea rows="5" class="form-control"></textarea></div>
+                                <button class="cta-btn" style="width: 100%;">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
