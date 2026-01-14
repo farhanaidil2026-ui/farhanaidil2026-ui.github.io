@@ -1,378 +1,894 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aidil Farhan | Data Engineering</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Aidil Farhan | Data Engineering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --primary: #00ff41;
+            --primary-dim: rgba(0, 255, 65, 0.1);
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border: 1px solid rgba(0, 255, 65, 0.3);
+            --glass: blur(10px);
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
 
-<style>
-:root {
-    --bg-color: #050505;
-    --card-bg: rgba(20, 20, 20, 0.85);
-    --primary: #00ff41;
-    --primary-dim: rgba(0, 255, 65, 0.15);
-    --text-main: #e0e0e0;
-    --text-muted: #a0a0a0;
-    --border: 1px solid rgba(0, 255, 65, 0.3);
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-}
+        #matrix-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; opacity: 0.25;
+        }
 
-body {
-    background: var(--bg-color);
-    color: var(--text-main);
-    overflow-x: hidden;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+        nav {
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid var(--primary-dim);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px);
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
+        .logo span { color: var(--primary); transition: color 0.2s; }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-btn {
+            background: none; border: none; color: var(--text-muted); font-size: 0.95rem;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s; letter-spacing: 1px;
+            padding: 5px 0; position: relative;
+        }
+        .nav-btn:hover, .nav-btn.active { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+        .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
+        .nav-btn.active::after { width: 100%; }
 
-/* MATRIX BACKGROUND */
-#matrix-canvas {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.25;
-}
+        main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
+        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
+        .page-section.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-/* NAV */
-nav {
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0,0,0,0.85);
-    border-bottom: 1px solid var(--primary-dim);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
+        h1, h2, h3, h4 { color: #fff; }
+        .section-header { text-align: center; margin-bottom: 50px; width: 100%; }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #fff;
-    text-decoration: none;
-}
-.logo span { color: var(--primary); }
+        h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 15px;
+            box-shadow: 0 5px 15px -5px var(--primary-dim);
+            margin: 0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-}
-.nav-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    text-transform: uppercase;
-}
-.nav-btn.active,
-.nav-btn:hover {
-    color: var(--primary);
-}
+        .glass-card {
+            background: var(--card-bg); border: var(--border); padding: 30px; border-radius: 8px;
+            transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            margin-top: 25px;
+        }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--primary-dim); border-color: var(--primary); }
 
-/* MAIN */
-main {
-    flex: 1;
-    padding: 40px 20px;
-}
-.page-section {
-    display: none;
-    max-width: 1200px;
-    margin: auto;
-}
-.page-section.active {
-    display: block;
-}
+        .home-container { display: flex; align-items: center; justify-content: space-between; min-height: 70vh; gap: 50px; }
+        .home-text { flex: 1; }
+        .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
+        .home-text .highlight { color: var(--primary); text-shadow: 0 0 10px var(--primary-dim); transition: color 0.2s; }
+        .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; max-width: 600px; }
+        .cta-btn {
+            padding: 12px 30px; background: transparent; color: var(--primary); border: 1px solid var(--primary);
+            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; text-decoration: none;
+            display: inline-block; letter-spacing: 1px;
+        }
+        .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
 
-/* HEADERS */
-.section-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-.section-header h2 {
-    font-size: 2.5rem;
-    border-bottom: 2px solid var(--primary);
-    display: inline-block;
-    padding-bottom: 10px;
-}
+        .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
+        .hero-img {
+            width: 280px; height: 400px;
+            object-fit: cover;
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.2);
+            filter: grayscale(100%);
+            transition: 0.5s;
+            border-radius: 4px;
+        }
+        .img-1 { transform: rotate(-5deg) translateX(-40px); z-index: 1; }
+        .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
+        .hero-img:hover {
+            z-index: 10;
+            filter: grayscale(0%);
+            transform: scale(1.05) rotate(0deg);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px var(--primary-dim);
+        }
 
-/* GLASS CARD */
-.glass-card {
-    background: var(--card-bg);
-    border: var(--border);
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 25px;
-    transition: 0.3s;
-}
-.glass-card:hover {
-    box-shadow: 0 0 30px var(--primary-dim);
-    transform: translateY(-5px);
-}
+        .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
 
-/* HOME */
-.home-container {
-    display: flex;
-    gap: 60px;
-    align-items: center;
-    min-height: 70vh;
-}
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--primary-dim); transition: border-left 0.2s; }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); transition: background 0.2s, box-shadow 0.2s; }
+        .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; transition: color 0.2s; }
+        .timeline-title { color: #fff; font-size: 1.2rem; font-weight: bold; }
+        .timeline-subtitle { color: var(--text-muted); font-style: italic; margin-bottom: 5px; }
+        .timeline-desc { font-size: 0.95rem; color: #ccc; }
 
-.home-text h1 {
-    font-size: 3.8rem;
-    line-height: 1.1;
-}
-.highlight {
-    color: var(--primary);
-}
-.home-text p {
-    color: var(--text-muted);
-    margin: 20px 0;
-}
+        .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 
-.cta-btn {
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    background: transparent;
-    padding: 12px 30px;
-    cursor: pointer;
-    font-weight: bold;
-}
-.cta-btn:hover {
-    background: var(--primary);
-    color: #000;
-}
+        .exp-list { list-style: none; margin-top: 10px; }
+        .exp-list li { margin-bottom: 8px; display: flex; align-items: start; gap: 10px; color: var(--text-muted); font-size: 0.95rem; }
+        .exp-list li i { color: var(--primary); margin-top: 4px; transition: color 0.2s; }
 
-/* NEW CLEAN HERO IMAGE DESIGN */
-.home-images {
-    position: relative;
-    width: 340px;
-    height: 440px;
-}
+        .skill-group { margin-bottom: 20px; }
+        .skill-group h4 { margin-bottom: 10px; font-size: 1rem; color: #fff; }
+        .skill-badge { display: inline-block; padding: 5px 12px; margin: 3px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px; font-size: 0.8rem; background: rgba(0, 255, 65, 0.05); transition: color 0.2s, border 0.2s; }
 
-.hero-frame {
-    width: 100%;
-    height: 100%;
-    padding: 6px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(0,255,65,0.4), transparent);
-    box-shadow: 0 0 40px rgba(0,255,65,0.2);
-}
+        .github-graph-container { text-align: center; overflow-x: auto; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,0.3); }
+        .github-graph-container img { max-width: 100%; height: auto; }
 
-.hero-main {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    filter: grayscale(40%);
-    transition: 0.4s;
-}
+        /* NEW GALLERY STYLES */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--primary-dim);
+            position: relative;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s, filter 0.4s;
+            filter: grayscale(80%);
+        }
+        .gallery-item:hover { border-color: var(--primary); }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
 
-.hero-frame:hover .hero-main {
-    filter: grayscale(0%);
-}
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
+        .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+        .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
+        .project-card:hover .click-hint { opacity: 1; }
 
-/* PROJECTS */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 25px;
-}
+        /* Project thumbnail & inline images */
+        .project-thumb {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            filter: grayscale(70%);
+            transition: 0.4s;
+            border: 1px solid var(--primary-dim);
+        }
+        .project-card:hover .project-thumb {
+            filter: grayscale(0%);
+            border-color: var(--primary);
+        }
 
-.project-thumb {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    filter: grayscale(70%);
-    transition: 0.4s;
-}
+        .inline-image {
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--primary-dim);
+        }
+        .inline-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(60%);
+            transition: 0.4s;
+        }
+        .inline-image:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
 
-.project-card:hover .project-thumb {
-    filter: grayscale(0%);
-}
+        .github-promo {
+            margin-top: 120px;
+            text-align: center;
+            padding: 50px 20px;
+            border: 2px dashed var(--primary);
+            background: rgba(0, 255, 65, 0.02);
+            transition: 0.3s;
+        }
+        .github-promo:hover { background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 30px var(--primary-dim); }
+        .github-icon-large { font-size: 4rem; color: #fff; margin-bottom: 20px; transition: 0.5s; display: inline-block; }
+        .github-promo:hover .github-icon-large { color: var(--primary); transform: scale(1.2) rotate(360deg); }
+        .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .github-promo .cta-btn { margin-top: 40px; }
 
-.skill-badge {
-    display: inline-block;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 0.8rem;
-    margin: 3px;
-}
+        .year-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .year-btn {
+            background: rgba(20,20,20,0.8);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 10px 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+        .year-btn:hover, .year-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-dim);
+        }
+        .year-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .year-content.active {
+            display: block;
+        }
+        .semester-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin: 30px 0 20px;
+            border-left: 3px solid var(--primary);
+            padding-left: 15px;
+        }
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .subject-card {
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .subject-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .subject-code {
+            font-family: monospace;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+        .subject-name {
+            font-size: 1.1rem;
+            color: #fff;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        .subject-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .subject-link {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .subject-link:hover { text-decoration: underline; }
 
-/* CONTACT */
-.contact-info {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-}
-.contact-link {
-    color: var(--text-muted);
-    text-decoration: none;
-    text-align: center;
-}
-.contact-link i {
-    font-size: 2rem;
-    color: var(--primary);
-}
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
+        .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; padding: 0; border-radius: 10px; position: relative; box-shadow: 0 0 50px var(--primary-dim); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--primary); }
+        .modal-body { padding: 30px; }
+        .modal-close { position: absolute; top: 15px; right: 20px; color: #fff; background: rgba(0,0,0,0.5); width: 35px; height: 35px; border-radius: 50%; text-align: center; line-height: 35px; font-size: 1.5rem; cursor: pointer; transition: 0.3s; z-index: 10; }
+        .modal-close:hover { background: var(--primary); color: #000; }
+        .modal-title { color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
+        .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
 
-/* MOBILE */
-@media (max-width: 768px) {
-    .home-container {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-</style>
+        .contact-wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
+        .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; transition: color 0.2s; }
+        .contact-link:hover { color: #fff; transform: scale(1.1); }
+
+        .contact-content-box { display: flex; gap: 30px; flex-wrap: wrap; }
+        .contact-visual { flex: 1; min-width: 300px; height: 400px; background-image: url('https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=500&auto=format&fit=crop&q=60'); background-size: cover; background-position: center; border-radius: 8px; border: 1px solid var(--primary-dim); filter: grayscale(100%); transition: 0.5s; }
+        .contact-visual:hover { filter: grayscale(0%); border-color: var(--primary); }
+        .contact-form-container { flex: 1; min-width: 300px; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 4px; }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .home-container { flex-direction: column; text-align: center; }
+            .nav-links { gap: 10px; font-size: 0.8rem; }
+            nav { padding: 15px; }
+            .hero-img { width: 80%; height: auto; }
+            .contact-content-box { flex-direction: column; }
+            .contact-visual { height: 200px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="matrix-canvas"></canvas>
+    <canvas id="matrix-canvas"></canvas>
 
-<nav>
-    <a class="logo" href="#" onclick="showPage('home')">Aidil<span>Farhan</span></a>
-    <ul class="nav-links">
-        <li><button class="nav-btn active" onclick="showPage('home')">Home</button></li>
-        <li><button class="nav-btn" onclick="showPage('projects')">Projects</button></li>
-        <li><button class="nav-btn" onclick="showPage('contact')">Contact</button></li>
-    </ul>
-</nav>
+    <nav>
+        <a href="#" class="logo" onclick="showPage('home')">Aidil<span>Farhan</span></a>
+        <ul class="nav-links">
+            <li><button class="nav-btn active" onclick="showPage('home')">Home</button></li>
+            <li><button class="nav-btn" onclick="showPage('about')">About</button></li>
+            <li><button class="nav-btn" onclick="showPage('coursework')">Coursework</button></li>
+            <li><button class="nav-btn" onclick="showPage('projects')">Projects</button></li>
+            <li><button class="nav-btn" onclick="showPage('contact')">Contact</button></li>
+        </ul>
+    </nav>
 
-<main>
+    <main>
+        <section id="home" class="page-section active">
+            <div class="home-container">
+                <div class="home-text">
+                    <p>Greetings</p>
+                    <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
+                    <p>Computer Science (Data Engineering) student at UTM</p>
+                    <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
+                </div>
 
-<section id="home" class="page-section active">
-<div class="home-container">
-    <div class="home-text">
-        <p>Greetings</p>
-        <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
-        <p>Computer Science (Data Engineering) student at UTM</p>
-        <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
-    </div>
+                <div class="home-images">
+                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_7_2025-12-30_20-50-34.jpg?raw=true" class="hero-img img-1" alt="Profile 1">
+                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true" class="hero-img img-2" alt="Profile 2">
+                </div>
+            </div>
+        </section>
 
-    <div class="home-images">
-        <div class="hero-frame">
-            <img class="hero-main"
-                 src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true">
+        <section id="about" class="page-section">
+            <div class="section-header">
+                <h2>About Me</h2>
+            </div>
+
+            <p class="about-intro">
+                <br>
+                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
+            </p>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-graduation-cap"></i> Academic Journey</div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 - Present</div>
+                    <div class="timeline-title">Universiti Teknologi Malaysia (UTM)</div>
+                    <div class="timeline-subtitle">Bachelor of Computer Science (Data Engineering) with Honors</div>
+                    <div class="timeline-desc">🏆 Yayasan Sultan Iskandar Scholarship Recipient</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 - 2025</div>
+                    <div class="timeline-title">Johor Matriculation College</div>
+                    <div class="timeline-subtitle">Physical Science • CGPA: 4.00 • MUET: Band 4.5</div>
+                    <div class="timeline-desc">🥈 2nd Place - Educational Comic (National Level, Matech Fest 2024)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2019 - 2024</div>
+                    <div class="timeline-title">SMK Layang-Layang</div>
+                    <div class="timeline-subtitle">SPM: 2A+ 4A 2A- 1B+ 1B</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&auto=format&fit=crop&q=60" alt="Campus Life">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&auto=format&fit=crop&q=60" alt="Coding Session">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1592280771884-f35d2595dc0f?w=500&auto=format&fit=crop&q=60" alt="Event">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60" alt="Group Study">
+                    </div>
+                </div>
+            </div>
+
+            <div class="exp-grid">
+                <div class="glass-card">
+                    <div class="about-section-title"><i class="fas fa-users-cog"></i> Leadership</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-check"></i> Committee Member in Activity Department - SUSKOM'25, UTM</li>
+                        <li><i class="fas fa-check"></i> President of Math & Science Club - SMK Layang-Layang (2024)</li>
+                        <li><i class="fas fa-check"></i> Prefect of Spiritual Department - SMK Layang-Layang (2020-2024)</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <div class="about-section-title"><i class="fas fa-trophy"></i> Competitions</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-medal"></i> 1st Place - Math Olympiad, Johor Matriculation</li>
+                        <li><i class="fas fa-medal"></i> 2nd Place - Educational Comic, Matech Fest 2024</li>
+                        <li><i class="fas fa-dot-circle"></i> Participant - SULAM UTHM Python for Data Analysts</li>
+                    </ul>
+                </div>
+                <div class="glass-card">
+                    <div class="about-section-title"><i class="fas fa-industry"></i> Engagement</div>
+                    <ul class="exp-list">
+                        <li><i class="fas fa-microphone"></i> Pittsburgh Paint Company (PPG) Talk</li>
+                        <li><i class="fas fa-microphone"></i> ASEAN Quantum Summits Seminar</li>
+                        <li><i class="fas fa-microphone"></i> Festival of Ideas (FOI) Putrajaya</li>
+                        <li><i class="fas fa-microphone"></i> Industry Visit to JCorp</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="about-section-title"><i class="fas fa-laptop-code"></i> Technical Arsenal</div>
+                <div class="skill-group">
+                    <h4>Programming & Tools</h4>
+                    <span class="skill-badge">C++</span>
+                    <span class="skill-badge">Python</span>
+                    <span class="skill-badge">Java</span>
+                    <span class="skill-badge">VS Code</span>
+                    <span class="skill-badge">MS Office</span>
+                </div>
+                <div class="skill-group">
+                    <h4>Creative Software</h4>
+                    <span class="skill-badge">Canva</span>
+                    <span class="skill-badge">Clip Studio Paint</span>
+                    <span class="skill-badge">Krita</span>
+                    <span class="skill-badge">Photoshop</span>
+                    <span class="skill-badge">CapCut</span>
+                </div>
+                <div class="skill-group">
+                    <h4>Languages</h4>
+                    <span class="skill-badge">Malay (Fluent)</span>
+                    <span class="skill-badge">English (Fluent)</span>
+                    <span class="skill-badge">Indonesian (Fluent)</span>
+                    <span class="skill-badge">Learning: Japanese, Korean, Arabic, Mandarin</span>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                 <div class="about-section-title"><i class="fab fa-github"></i> GitHub Activity</div>
+                 <div class="github-graph-container">
+                     <img src="https://github-readme-activity-graph.vercel.app/graph?username=farhanaidil2026-ui&theme=github-compact&hide_border=true&area=true" alt="GitHub Activity Graph">
+                 </div>
+            </div>
+        </section>
+
+        <section id="coursework" class="page-section">
+            <div class="section-header">
+                <h2>Academic Archive</h2>
+            </div>
+
+            <div class="year-tabs">
+                <button class="year-btn active" onclick="openYear(event, 'year1')">Year 1</button>
+                <button class="year-btn" onclick="openYear(event, 'year2')">Year 2</button>
+                <button class="year-btn" onclick="openYear(event, 'year3')">Year 3</button>
+                <button class="year-btn" onclick="openYear(event, 'year4')">Year 4</button>
+            </div>
+
+            <div id="year1" class="year-content active">
+                <div class="glass-card">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="subject-grid">
+                        <div class="subject-card">
+                            <span class="subject-code">SECR1013</span>
+                            <div class="subject-name">Digital Logic</div>
+                            <p class="subject-desc">Introduction to boolean algebra, logic gates, and the design of combinational and sequential circuits.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECR1013-Digital-Logic" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                        </div>
+                        <div class="subject-card">
+                            <span class="subject-code">SECP1513</span>
+                            <div class="subject-name">Tech & Info Systems</div>
+                            <p class="subject-desc">Foundational concepts of information systems, IT infrastructure, and the role of technology in business.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECP1513-Technology%20%26%20Information%20System" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                        </div>
+                        <div class="subject-card">
+                            <span class="subject-code">SECJ1013</span>
+                            <div class="subject-name">Programming Technique 1</div>
+                            <p class="subject-desc">Problem-solving strategies and fundamental programming concepts using C++.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECJ1013-Programming-1" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                        </div>
+                        <div class="subject-card">
+                            <span class="subject-code">SECI1013</span>
+                            <div class="subject-name">Discrete Structure</div>
+                            <p class="subject-desc">Mathematical structures fundamental to computer science, including set theory, logic, and graph theory.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECI1013-Discrete-Structure" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                        </div>
+                        <div class="subject-card">
+                            <span class="subject-code">ULRS1032</span>
+                            <div class="subject-name">Integrity & Anti-Corruption</div>
+                            <p class="subject-desc">Exploration of ethical values, integrity, and anti-corruption policies in society.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/ULRS1032-Integrity%20and%20Anti-Corruption" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                        </div>
+                    </div>
+
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content for this semester will be added soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="year2" class="year-content">
+                <div class="glass-card">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="year3" class="year-content">
+                <div class="glass-card">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Industry placement / Advanced Modules.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Industry placement / Advanced Modules.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="year4" class="year-content">
+                <div class="glass-card">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Final Year Project / Specialization.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Graduation preparation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="page-section">
+            <div class="section-header">
+                <h2>Projects & Reflections</h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Existing project 1 -->
+                <div class="glass-card project-card" onclick="openModal(1)">
+                    <div>
+                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202025-12-30%20223806.png?raw=true" class="project-thumb" alt="Design Thinking Project">
+                        <h3>Design Thinking Project</h3>
+                        <p class="project-desc">System to regulate library and study space utilization at UTM.</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">Canva</span>
+                        <span class="skill-badge">Design Thinking</span>
+                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <!-- Existing project 2 -->
+                <div class="glass-card project-card" onclick="openModal(2)">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800" class="project-thumb" alt="E-Portfolio">
+                        <h3>E-Portfolio Website</h3>
+                        <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">HTML</span>
+                        <span class="skill-badge">CSS</span>
+                        <span class="skill-badge">JS</span>
+                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <!-- Existing project 3 -->
+                <div class="glass-card project-card" onclick="openModal(3)">
+                    <div>
+                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true" class="project-thumb" alt="ASEAN Quantum Summit">
+                        <h3>ASEAN Quantum Summit</h3>
+                        <p class="project-desc">Insights on quantum computing transforming Johor.</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">Research</span>
+                        <span class="skill-badge">Future Tech</span>
+                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <!-- Replaced placeholder 1 (non-dim, meaningful placeholder) -->
+                <div class="glass-card project-card" onclick="openModalPlaceholder('timelist')">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=900&auto=format&fit=crop&q=80" class="project-thumb" alt="Timetable Optimizer">
+                        <h3>Smart Timetable Optimizer (Concept)</h3>
+                        <p class="project-desc">Prototype concept: use graph matching & constraint solving to reduce course clashes and optimize room allocation.</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">Algorithms</span>
+                        <span class="skill-badge">Graphs</span>
+                        <span class="skill-badge">Python (Planned)</span>
+                        <div class="click-hint">Concept & goals</div>
+                    </div>
+                </div>
+
+                <!-- Replaced placeholder 2 -->
+                <div class="glass-card project-card" onclick="openModalPlaceholder('coursework')">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1526378729150-2f0bb1b5a45d?w=900&auto=format&fit=crop&q=80" class="project-thumb" alt="Coursework Snippets">
+                        <h3>Coursework Snippets</h3>
+                        <p class="project-desc">Screenshots and summaries from class assignments — code snippets, diagrams, and short reflections.</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">C++</span>
+                        <span class="skill-badge">Data Structures</span>
+                        <div class="click-hint">View snippets & notes</div>
+                    </div>
+                </div>
+
+                <!-- Replaced placeholder 3 -->
+                <div class="glass-card project-card" onclick="openModalPlaceholder('viz')">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1508385082359-f2b9b77a7f9b?w=900&auto=format&fit=crop&q=80" class="project-thumb" alt="Data Viz">
+                        <h3>Data Visualization Gallery</h3>
+                        <p class="project-desc">A gallery of visualizations and dashboards created while learning plotting libraries and data exploration.</p>
+                    </div>
+                    <div>
+                        <span class="skill-badge">Pandas</span>
+                        <span class="skill-badge">Matplotlib</span>
+                        <span class="skill-badge">Tableau (Planned)</span>
+                        <div class="click-hint">Visual experiments</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="github-promo glass-card">
+                <i class="fab fa-github github-icon-large"></i>
+                <h3>Want to see more code?</h3>
+                <p>These are just the highlights. Check out my GitHub profile to see all my repositories, side projects, and assignments.</p>
+                <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="cta-btn">
+                    Visit My GitHub
+                </a>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <a href="mailto:farhanaidil2026@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
+                    <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+                    <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-link"><i class="fab fa-github"></i><span>GitHub</span></a>
+                </div>
+
+                <div class="glass-card">
+                    <div class="contact-content-box">
+                        <div class="contact-visual"></div>
+                        <div class="contact-form-container">
+                            <form onsubmit="event.preventDefault(); alert('Message sent!');">
+                                <div class="form-group"><label>Name</label><input type="text" class="form-control"></div>
+                                <div class="form-group"><label>Email</label><input type="email" class="form-control"></div>
+                                <div class="form-group"><label>Message</label><textarea rows="5" class="form-control"></textarea></div>
+                                <button class="cta-btn" style="width: 100%;">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="project-modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(event)">&times;</span>
+            <img id="modal-image" class="modal-img" src="" alt="Project Image">
+            <div class="modal-body">
+                <h2 id="modal-title" class="modal-title" style="text-align: left; border: none; margin: 0; box-shadow: none; left: 0; transform: none;">Project Title</h2>
+                <div class="modal-subtitle">Summary</div>
+                <p id="modal-summary" class="modal-text">Project summary goes here.</p>
+                <div class="modal-subtitle">Personal Reflection</div>
+                <p id="modal-reflection" class="modal-text">Personal reflection goes here.</p>
+            </div>
         </div>
     </div>
-</div>
-</section>
 
-<section id="projects" class="page-section">
-<div class="section-header">
-    <h2>Projects</h2>
-</div>
+    <script>
+        /* Navigation and page switching */
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            const buttons = document.querySelectorAll('.nav-btn');
+            for(let btn of buttons) {
+                if(btn.textContent.toLowerCase() === pageId) btn.classList.add('active');
+            }
+            // scroll to top of main content for smoother experience
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-<div class="projects-grid">
+        /* Year tabs */
+        function openYear(evt, yearName) {
+            const yearContents = document.getElementsByClassName("year-content");
+            for (let i = 0; i < yearContents.length; i++) {
+                yearContents[i].classList.remove("active");
+            }
+            const yearBtns = document.getElementsByClassName("year-btn");
+            for (let i = 0; i < yearBtns.length; i++) {
+                yearBtns[i].classList.remove("active");
+            }
+            document.getElementById(yearName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
 
-<div class="glass-card project-card">
-    <img class="project-thumb"
-         src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800">
-    <h3>Smart Timetable Optimizer</h3>
-    <p class="project-desc">
-        Concept project exploring optimization algorithms to reduce timetable clashes.
-    </p>
-    <span class="skill-badge">Algorithms</span>
-    <span class="skill-badge">Python</span>
-</div>
+        /* Project data for modal (existing ones) */
+        const projectData = {
+            1: {
+                title: "Design Thinking Project",
+                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202025-12-30%20223806.png?raw=true",
+                summary: "This project focused on designing a system to regulate library and study space utilization at UTM. We identified overcrowding issues and proposed a digital reservation system.",
+                reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
+            },
+            2: {
+                title: "E-Portfolio Website",
+                image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
+                summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
+                reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence. It serves as a living document of my growth."
+            },
+            3: {
+                title: "ASEAN Quantum Summit",
+                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true",
+                summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
+                reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds, problems that take classical computers days was inspiring. It motivated me to study linear algebra more deeply."
+            }
+        };
 
-<div class="glass-card project-card">
-    <img class="project-thumb"
-         src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800">
-    <h3>E-Portfolio Website</h3>
-    <p class="project-desc">
-        Personal portfolio built with HTML, CSS and JavaScript.
-    </p>
-    <span class="skill-badge">HTML</span>
-    <span class="skill-badge">CSS</span>
-    <span class="skill-badge">JS</span>
-</div>
+        function openModal(id) {
+            const data = projectData[id];
+            if (!data) return;
+            document.getElementById('modal-image').src = data.image;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-summary').innerText = data.summary;
+            document.getElementById('modal-reflection').innerText = data.reflection;
+            document.getElementById('project-modal').style.display = 'flex';
+        }
 
-<div class="glass-card project-card">
-    <img class="project-thumb"
-         src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?w=800">
-    <h3>Future Data Project</h3>
-    <p class="project-desc">
-        Reserved for upcoming coursework and data engineering experiments.
-    </p>
-    <span class="skill-badge">Data</span>
-    <span class="skill-badge">ETL</span>
-</div>
+        /* Simple placeholders open modal-like summary */
+        function openModalPlaceholder(key) {
+            const placeholders = {
+                'timelist': {
+                    title: "Smart Timetable Optimizer (Concept)",
+                    image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&auto=format&fit=crop&q=80",
+                    summary: "Concept: apply graph matching and constraint programming to optimize timetables and room allocations for minimal conflicts.",
+                    reflection: "This concept helps me plan for future coursework where optimization problems and graph algorithms are taught. I want to prototype this in Python as a semester side project."
+                },
+                'coursework': {
+                    title: "Coursework Snippets",
+                    image: "https://images.unsplash.com/photo-1526378729150-2f0bb1b5a45d?w=1200&auto=format&fit=crop&q=80",
+                    summary: "A collection of code snippets, diagrams, and short reflections from class assignments across Programming, Digital Logic, and Discrete Structures.",
+                    reflection: "Keeping short, focused notes and screenshots helps me revise faster and document learning progress."
+                },
+                'viz': {
+                    title: "Data Visualization Gallery",
+                    image: "https://images.unsplash.com/photo-1508385082359-f2b9b77a7f9b?w=1200&auto=format&fit=crop&q=80",
+                    summary: "A small gallery of charts and visual experiments using Matplotlib and Pandas. This is where I practice storytelling with data.",
+                    reflection: "Visualization is the bridge between raw data and human decisions — practicing visual aesthetics is as important as plotting accuracy."
+                }
+            };
+            const d = placeholders[key];
+            if (!d) return;
+            document.getElementById('modal-image').src = d.image;
+            document.getElementById('modal-title').innerText = d.title;
+            document.getElementById('modal-summary').innerText = d.summary;
+            document.getElementById('modal-reflection').innerText = d.reflection;
+            document.getElementById('project-modal').style.display = 'flex';
+        }
 
-</div>
-</section>
+        function closeModal(e) {
+            if (e.target === document.getElementById('project-modal') || e.target.classList.contains('modal-close')) {
+                document.getElementById('project-modal').style.display = 'none';
+            }
+        }
 
-<section id="contact" class="page-section">
-<div class="section-header">
-    <h2>Get In Touch</h2>
-</div>
+        /* Matrix background (keeps green, no glitch) */
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        const matrixColor = '#00ff41'; // fixed green matrix color
 
-<div class="contact-info">
-    <a class="contact-link" href="mailto:farhanaidil2026@gmail.com">
-        <i class="fas fa-envelope"></i><br>Email
-    </a>
-    <a class="contact-link" href="https://github.com/farhanaidil2026-ui">
-        <i class="fab fa-github"></i><br>GitHub
-    </a>
-</div>
-</section>
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-</main>
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/-+*';
+        const charArray = chars.split('');
+        const fontSize = 15;
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = [];
+        for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
 
-<script>
-function showPage(id) {
-    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.textContent.toLowerCase() === id) btn.classList.add('active');
-    });
-}
+        function drawMatrix() {
+            // fill background with slight transparency for trailing effect
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = matrixColor;
+            ctx.font = fontSize + 'px monospace';
+            // re-compute columns if canvas resized more strongly
+            if (Math.floor(canvas.width / fontSize) !== columns) {
+                columns = Math.floor(canvas.width / fontSize);
+                drops = [];
+                for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
+            }
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 40);
 
-/* MATRIX */
-const canvas = document.getElementById('matrix-canvas');
-const ctx = canvas.getContext('2d');
+        // small UX: close modal on ESC
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('project-modal').style.display = 'none'; } });
 
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const fontSize = 16;
-let drops = Array(Math.floor(canvas.width / fontSize)).fill(0);
-
-function draw() {
-    ctx.fillStyle = 'rgba(5,5,5,0.05)';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = '#00ff41';
-    ctx.font = fontSize + 'px monospace';
-
-    drops.forEach((y, i) => {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, y * fontSize);
-        drops[i] = y * fontSize > canvas.height && Math.random() > 0.975 ? 0 : y + 1;
-    });
-}
-setInterval(draw, 40);
-</script>
-
+    </script>
 </body>
 </html>
