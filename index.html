@@ -8,352 +8,110 @@
     <style>
         :root {
             --bg-color: #050505;
-            --card-bg: rgba(20, 20, 20, 0.85);
+            --card-bg: rgba(20, 20, 20, 0.95);
             --primary: #00ff41; 
             --primary-dim: rgba(0, 255, 65, 0.1);
             --text-main: #e0e0e0;
             --text-muted: #a0a0a0;
-            --border: 1px solid rgba(0, 255, 65, 0.3);
+            --border: 1px solid rgba(0, 255, 65, 0.5);
             --glass: blur(10px);
-            transition: --primary 0.2s, --border 0.2s; 
+            transition: 0.2s; 
         }
 
         .glitch-mode {
             --primary: #ff003c; 
             --primary-dim: rgba(255, 0, 60, 0.15);
-            --border: 1px solid rgba(255, 0, 60, 0.4);
-            transition: none; 
+            --border: 1px solid rgba(255, 0, 60, 0.6);
         }
         
         @keyframes glitch {
             0% { clip-path: inset(80% 0 0 0); transform: translate(-2px, -2px); }
-            10% { clip-path: inset(10% 0 85% 0); transform: translate(2px, 2px); }
-            20% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
-            30% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
-            40% { clip-path: inset(0 0 80% 0); transform: translate(-2px, -2px); }
-            50% { clip-path: inset(30% 0 30% 0); transform: translate(2px, 2px); }
-            60% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 2px); }
-            70% { clip-path: inset(50% 0 30% 0); transform: translate(2px, -2px); }
-            80% { clip-path: inset(20% 0 70% 0); transform: translate(-2px, -2px); }
-            90% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 2px); }
             100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
         }
 
-        .glitch-mode body::before,
-        .glitch-mode body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color);
-            z-index: 9999;
-            opacity: 0.5;
-            pointer-events: none;
-            mix-blend-mode: hard-light;
-        }
-
         .glitch-mode body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 0, 60, 0.1); z-index: 9999; pointer-events: none;
             animation: glitch 0.4s infinite linear alternate-reverse;
-            background: rgba(255, 0, 60, 0.2);
-            transform: translate(-3px, 0);
-        }
-        
-        .glitch-mode body::after {
-            animation: glitch 0.4s infinite linear alternate;
-            background: rgba(0, 255, 255, 0.2); 
-            transform: translate(3px, 0);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
-        #matrix-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; opacity: 0.25;
-        }
+        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.25; }
 
         nav {
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.85);
-            border-bottom: 1px solid var(--primary-dim); 
+            padding: 20px 40px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid var(--primary-dim); 
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px);
-            transition: border-bottom 0.2s;
         }
         .logo { font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; }
-        .logo span { color: var(--primary); transition: color 0.2s; }
+        .logo span { color: var(--primary); }
         .nav-links { list-style: none; display: flex; gap: 30px; }
         .nav-btn {
             background: none; border: none; color: var(--text-muted); font-size: 0.95rem;
-            text-transform: uppercase; cursor: pointer; transition: 0.3s; letter-spacing: 1px;
-            padding: 5px 0; position: relative;
+            text-transform: uppercase; cursor: pointer; transition: 0.3s; position: relative;
         }
-        .nav-btn:hover, .nav-btn.active { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
-        .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
-        .nav-btn.active::after { width: 100%; }
+        .nav-btn:hover, .nav-btn.active { color: var(--primary); }
 
-        main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
-        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
+        main { flex: 1; padding: 40px 20px; }
+        .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; }
         .page-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1, h2, h3, h4 { color: #fff; }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-            width: 100%;
-        }
-
-        h2 {
-            font-size: 2.5rem; 
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--primary); 
-            display: inline-block;
-            padding-bottom: 15px;
-            box-shadow: 0 5px 15px -5px var(--primary-dim);
-            margin: 0;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        h2 { font-size: 2.5rem; text-transform: uppercase; border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 15px; }
 
         .glass-card {
             background: var(--card-bg); border: var(--border); padding: 30px; border-radius: 8px;
-            transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            margin-bottom: 25px;
-            margin-top: 25px;
+            transition: 0.3s; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
-        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--primary-dim); border-color: var(--primary); }
+        .glass-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 0 20px var(--primary-dim); }
         
+        /* HOME IMAGES */
         .home-container { display: flex; align-items: center; justify-content: space-between; min-height: 70vh; gap: 50px; }
-        .home-text { flex: 1; }
         .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
-        .home-text .highlight { color: var(--primary); text-shadow: 0 0 10px var(--primary-dim); transition: color 0.2s; }
-        .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; max-width: 600px; }
+        .highlight { color: var(--primary); }
         .cta-btn {
             padding: 12px 30px; background: transparent; color: var(--primary); border: 1px solid var(--primary);
-            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; text-decoration: none;
-            display: inline-block; letter-spacing: 1px;
+            font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block;
         }
-        .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
-        .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
+        .cta-btn:hover { background: var(--primary); color: #000; }
         
-        .hero-img { 
-            width: 280px; height: 400px; 
-            object-fit: cover; 
-            position: absolute; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            filter: grayscale(100%); 
-            transition: 0.5s; 
-            border-radius: 4px; 
-        }
+        .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
+        .hero-img { width: 280px; height: 400px; object-fit: cover; position: absolute; border: 2px solid var(--primary-dim); border-radius: 8px; transition: 0.5s; }
         .img-1 { transform: rotate(-5deg) translateX(-40px); z-index: 1; }
         .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
+        .hero-img:hover { z-index: 10; transform: scale(1.05) rotate(0deg); border-color: var(--primary); }
 
-        .hero-img:hover { 
-            z-index: 10; 
-            filter: grayscale(0%); 
-            transform: scale(1.05) rotate(0deg); 
-            border-color: var(--primary); 
-            box-shadow: 0 0 30px var(--primary-dim); 
-        }
-        
-        .about-section-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
-        
-        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 25px; border-left: 2px solid var(--primary-dim); transition: border-left 0.2s; }
-        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); transition: background 0.2s, box-shadow 0.2s; }
-        .timeline-date { color: var(--primary); font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; transition: color 0.2s; }
-        .timeline-title { color: #fff; font-size: 1.2rem; font-weight: bold; }
-        .timeline-subtitle { color: var(--text-muted); font-style: italic; margin-bottom: 5px; }
-        .timeline-desc { font-size: 0.95rem; color: #ccc; }
+        /* GALLERY GRID */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .gallery-item { height: 200px; overflow: hidden; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
+        .gallery-item:hover img { transform: scale(1.1); }
 
-        .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .exp-list { list-style: none; margin-top: 10px; }
-        .exp-list li { margin-bottom: 8px; display: flex; align-items: start; gap: 10px; color: var(--text-muted); font-size: 0.95rem; }
-        .exp-list li i { color: var(--primary); margin-top: 4px; transition: color 0.2s; }
+        /* PROJECTS - FIXED BRIGHTNESS */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .project-card { cursor: pointer; opacity: 1 !important; border-style: solid !important; }
+        .project-desc { color: var(--text-muted); margin-bottom: 20px; }
 
-        .skill-group { margin-bottom: 20px; }
-        .skill-group h4 { margin-bottom: 10px; font-size: 1rem; color: #fff; }
-        .skill-badge { display: inline-block; padding: 5px 12px; margin: 3px; border: 1px solid var(--primary); color: var(--primary); border-radius: 20px; font-size: 0.8rem; background: rgba(0, 255, 65, 0.05); transition: color 0.2s, border 0.2s; }
+        /* COURSEWORK TABS */
+        .year-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .year-btn { background: #111; border: 1px solid var(--border); color: #fff; padding: 10px 25px; cursor: pointer; }
+        .year-btn.active { background: var(--primary); color: #000; }
+        .year-content { display: none; }
+        .year-content.active { display: block; }
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .subject-card { background: rgba(30, 30, 30, 0.8); border: 1px solid var(--primary-dim); padding: 20px; border-radius: 5px; }
+        .subject-code { color: var(--primary); font-family: monospace; }
 
-        .github-graph-container { text-align: center; overflow-x: auto; padding: 20px; border: 1px solid var(--border); border-radius: 10px; background: rgba(0,0,0,0.3); }
-        .github-graph-container img { max-width: 100%; height: auto; }
-
-        /* NEW GALLERY STYLES */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .gallery-item {
-            height: 200px;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid var(--primary-dim);
-            position: relative;
-            cursor: pointer;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s, filter 0.4s;
-            filter: grayscale(80%);
-        }
-        .gallery-item:hover { border-color: var(--primary); }
-        .gallery-item:hover img {
-            transform: scale(1.1);
-            filter: grayscale(0%);
-        }
-
-        .projects-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 30px; 
-            margin-top: 20px; 
-        }
-        .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
-        .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
-        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
-        .project-card:hover .click-hint { opacity: 1; }
-        
-        .github-promo { 
-            margin-top: 120px; 
-            text-align: center; 
-            padding: 50px 20px; 
-            border: 2px dashed var(--primary); 
-            background: rgba(0, 255, 65, 0.02); 
-            transition: 0.3s; 
-        }
-        .github-promo:hover { background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 30px var(--primary-dim); }
-        .github-icon-large { font-size: 4rem; color: #fff; margin-bottom: 20px; transition: 0.5s; display: inline-block; }
-        .github-promo:hover .github-icon-large { color: var(--primary); transform: scale(1.2) rotate(360deg); }
-        .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
-        .github-promo .cta-btn { margin-top: 40px; }
-
-        .year-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        .year-btn {
-            background: rgba(20,20,20,0.8);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 10px 25px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            border-radius: 4px;
-        }
-        .year-btn:hover, .year-btn.active {
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-dim);
-        }
-        .year-content {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        .year-content.active {
-            display: block;
-        }
-        .semester-title {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin: 30px 0 20px;
-            border-left: 3px solid var(--primary);
-            padding-left: 15px;
-        }
-        .subject-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .subject-card {
-            background: rgba(30, 30, 30, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-        .subject-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
-        .subject-code {
-            font-family: monospace;
-            background: rgba(255,255,255,0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: var(--primary);
-        }
-        .subject-name {
-            font-size: 1.1rem;
-            color: #fff;
-            margin: 10px 0;
-            font-weight: 600;
-        }
-        .subject-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-        .subject-link {
-            display: inline-block;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        .subject-link:hover { text-decoration: underline; }
-
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
-        .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; padding: 0; border-radius: 10px; position: relative; box-shadow: 0 0 50px var(--primary-dim); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
-        .modal-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--primary); }
+        /* MODAL */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; border-radius: 10px; position: relative; overflow: hidden; }
+        .modal-img { width: 100%; height: 250px; object-fit: cover; }
         .modal-body { padding: 30px; }
-        .modal-close { position: absolute; top: 15px; right: 20px; color: #fff; background: rgba(0,0,0,0.5); width: 35px; height: 35px; border-radius: 50%; text-align: center; line-height: 35px; font-size: 1.5rem; cursor: pointer; transition: 0.3s; z-index: 10; }
-        .modal-close:hover { background: var(--primary); color: #000; }
-        .modal-title { color: var(--primary); font-size: 1.8rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
-        .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
-
-        .contact-wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
-        .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
-        .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
-        .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; transition: color 0.2s; }
-        .contact-link:hover { color: #fff; transform: scale(1.1); }
-        
-        /* Updated Contact Layout with Image */
-        .contact-content-box { display: flex; gap: 30px; flex-wrap: wrap; }
-        .contact-visual { flex: 1; min-width: 300px; height: 400px; background-image: url('https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=500&auto=format&fit=crop&q=60'); background-size: cover; background-position: center; border-radius: 8px; border: 1px solid var(--primary-dim); filter: grayscale(100%); transition: 0.5s; }
-        .contact-visual:hover { filter: grayscale(0%); border-color: var(--primary); }
-        .contact-form-container { flex: 1; min-width: 300px; }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 4px; }
-        .form-control:focus { outline: none; border-color: var(--primary); }
-
-        @media (max-width: 768px) {
-            .home-container { flex-direction: column; text-align: center; }
-            .nav-links { gap: 10px; font-size: 0.8rem; }
-            nav { padding: 15px; }
-            .hero-img { width: 80%; height: auto; }
-            .contact-content-box { flex-direction: column; }
-            .contact-visual { height: 200px; }
-        }
+        .modal-close { position: absolute; top: 15px; right: 20px; color: #fff; font-size: 2rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -380,7 +138,6 @@
                     <p>Computer Science (Data Engineering) student at UTM</p>
                     <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
                 </div>
-                
                 <div class="home-images">
                     <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_7_2025-12-30_20-50-34.jpg?raw=true" class="hero-img img-1" alt="Profile 1">
                     <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true" class="hero-img img-2" alt="Profile 2">
@@ -389,123 +146,31 @@
         </section>
 
         <section id="about" class="page-section">
-            <div class="section-header">
-                <h2>About Me</h2>
-            </div>
-            
-            <p class="about-intro">
-                <br>
-                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
-            </p>
-
+            <div class="section-header"><h2>About Me</h2></div>
             <div class="glass-card">
-                <div class="about-section-title"><i class="fas fa-graduation-cap"></i> Academic Journey</div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025 - Present</div>
-                    <div class="timeline-title">Universiti Teknologi Malaysia (UTM)</div>
-                    <div class="timeline-subtitle">Bachelor of Computer Science (Data Engineering) with Honors</div>
-                    <div class="timeline-desc">🏆 Yayasan Sultan Iskandar Scholarship Recipient</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2024 - 2025</div>
-                    <div class="timeline-title">Johor Matriculation College</div>
-                    <div class="timeline-subtitle">Physical Science • CGPA: 4.00 • MUET: Band 4.5</div>
-                    <div class="timeline-desc">🥈 2nd Place - Educational Comic (National Level, Matech Fest 2024)</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2019 - 2024</div>
-                    <div class="timeline-title">SMK Layang-Layang</div>
-                    <div class="timeline-subtitle">SPM: 2A+ 4A 2A- 1B+ 1B</div>
-                </div>
-            </div>
-
-            <div class="glass-card">
-                <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
+                <h3><i class="fas fa-graduation-cap"></i> Academic Journey</h3>
+                <p>Currently enrolled in the 2u2i program at UTM, combining study with industry experience.</p>
                 <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&auto=format&fit=crop&q=60" alt="Campus Life">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&auto=format&fit=crop&q=60" alt="Coding Session">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1592280771884-f35d2595dc0f?w=500&auto=format&fit=crop&q=60" alt="Event">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&auto=format&fit=crop&q=60" alt="Group Study">
-                    </div>
-                </div>
-            </div>
-
-            <div class="exp-grid">
-                <div class="glass-card">
-                    <div class="about-section-title"><i class="fas fa-users-cog"></i> Leadership</div>
-                    <ul class="exp-list">
-                        <li><i class="fas fa-check"></i> Committee Member in Activity Department - SUSKOM'25, UTM</li>
-                        <li><i class="fas fa-check"></i> President of Math & Science Club - SMK Layang-Layang (2024)</li>
-                        <li><i class="fas fa-check"></i> Prefect of Spiritual Department - SMK Layang-Layang (2020-2024)</li>
-                    </ul>
-                </div>
-                <div class="glass-card">
-                    <div class="about-section-title"><i class="fas fa-trophy"></i> Competitions</div>
-                    <ul class="exp-list">
-                        <li><i class="fas fa-medal"></i> 1st Place - Math Olympiad, Johor Matriculation</li>
-                        <li><i class="fas fa-medal"></i> 2nd Place - Educational Comic, Matech Fest 2024</li>
-                        <li><i class="fas fa-dot-circle"></i> Participant - SULAM UTHM Python for Data Analysts</li>
-                    </ul>
-                </div>
-                <div class="glass-card">
-                    <div class="about-section-title"><i class="fas fa-industry"></i> Engagement</div>
-                    <ul class="exp-list">
-                        <li><i class="fas fa-microphone"></i> Pittsburgh Paint Company (PPG) Talk</li>
-                        <li><i class="fas fa-microphone"></i> ASEAN Quantum Summits Seminar</li>
-                        <li><i class="fas fa-microphone"></i> Festival of Ideas (FOI) Putrajaya</li>
-                        <li><i class="fas fa-microphone"></i> Industry Visit to JCorp</li>
-                    </ul>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500" alt="UTM Life"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500" alt="Coding"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500" alt="Study"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500" alt="Campus"></div>
                 </div>
             </div>
 
             <div class="glass-card">
-                <div class="about-section-title"><i class="fas fa-laptop-code"></i> Technical Arsenal</div>
-                <div class="skill-group">
-                    <h4>Programming & Tools</h4>
-                    <span class="skill-badge">C++</span>
-                    <span class="skill-badge">Python</span>
-                    <span class="skill-badge">Java</span>
-                    <span class="skill-badge">VS Code</span>
-                    <span class="skill-badge">MS Office</span>
+                <h3>Technical Arsenal</h3>
+                <div style="margin-top: 15px;">
+                    <span class="cta-btn" style="padding: 5px 10px; font-size: 0.8rem; margin: 3px;">C++</span>
+                    <span class="cta-btn" style="padding: 5px 10px; font-size: 0.8rem; margin: 3px;">Python</span>
+                    <span class="cta-btn" style="padding: 5px 10px; font-size: 0.8rem; margin: 3px;">Java</span>
+                    <span class="cta-btn" style="padding: 5px 10px; font-size: 0.8rem; margin: 3px;">SQL</span>
                 </div>
-                <div class="skill-group">
-                    <h4>Creative Software</h4>
-                    <span class="skill-badge">Canva</span>
-                    <span class="skill-badge">Clip Studio Paint</span>
-                    <span class="skill-badge">Krita</span>
-                    <span class="skill-badge">Photoshop</span>
-                    <span class="skill-badge">CapCut</span>
-                </div>
-                <div class="skill-group">
-                    <h4>Languages</h4>
-                    <span class="skill-badge">Malay (Fluent)</span>
-                    <span class="skill-badge">English (Fluent)</span>
-                    <span class="skill-badge">Indonesian (Fluent)</span>
-                    <span class="skill-badge">Learning: Japanese, Korean, Arabic, Mandarin</span>
-                </div>
-            </div>
-
-            <div class="glass-card">
-                 <div class="about-section-title"><i class="fab fa-github"></i> GitHub Activity</div>
-                 <div class="github-graph-container">
-                     <img src="https://github-readme-activity-graph.vercel.app/graph?username=farhanaidil2026-ui&theme=github-compact&hide_border=true&area=true" alt="GitHub Activity Graph">
-                 </div>
             </div>
         </section>
 
         <section id="coursework" class="page-section">
-            <div class="section-header">
-                <h2>Academic Archive</h2>
-            </div>
-
+            <div class="section-header"><h2>Academic Archive</h2></div>
             <div class="year-tabs">
                 <button class="year-btn active" onclick="openYear(event, 'year1')">Year 1</button>
                 <button class="year-btn" onclick="openYear(event, 'year2')">Year 2</button>
@@ -515,233 +180,88 @@
 
             <div id="year1" class="year-content active">
                 <div class="glass-card">
-                    <div class="semester-title">Semester 1</div>
+                    <h3 style="color:var(--primary); margin-bottom: 20px;">Semester 1</h3>
                     <div class="subject-grid">
                         <div class="subject-card">
                             <span class="subject-code">SECR1013</span>
-                            <div class="subject-name">Digital Logic</div>
-                            <p class="subject-desc">Introduction to boolean algebra, logic gates, and the design of combinational and sequential circuits.</p>
-                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECR1013-Digital-Logic" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                            <h4>Digital Logic</h4>
+                            <p>Boolean algebra, logic gates, and circuit design.</p>
+                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECR1013-Digital-Logic" target="_blank" style="color:var(--primary);">Repo</a>
                         </div>
                         <div class="subject-card">
                             <span class="subject-code">SECP1513</span>
-                            <div class="subject-name">Tech & Info Systems</div>
-                            <p class="subject-desc">Foundational concepts of information systems, IT infrastructure, and the role of technology in business.</p>
-                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECP1513-Technology%20%26%20Information%20System" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                            <h4>Tech & Info Systems</h4>
+                            <p>Foundations of IT infrastructure and business tech.</p>
                         </div>
                         <div class="subject-card">
                             <span class="subject-code">SECJ1013</span>
-                            <div class="subject-name">Programming Technique 1</div>
-                            <p class="subject-desc">Problem-solving strategies and fundamental programming concepts using C++.</p>
-                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECJ1013-Programming-1" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                            <h4>Programming Technique 1</h4>
+                            <p>Problem-solving and C++ fundamentals.</p>
                         </div>
                         <div class="subject-card">
                             <span class="subject-code">SECI1013</span>
-                            <div class="subject-name">Discrete Structure</div>
-                            <p class="subject-desc">Mathematical structures fundamental to computer science, including set theory, logic, and graph theory.</p>
-                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/SECI1013-Discrete-Structure" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
+                            <h4>Discrete Structure</h4>
+                            <p>Math structures for CS, graph theory, and logic.</p>
                         </div>
                         <div class="subject-card">
                             <span class="subject-code">ULRS1032</span>
-                            <div class="subject-name">Integrity & Anti-Corruption</div>
-                            <p class="subject-desc">Exploration of ethical values, integrity, and anti-corruption policies in society.</p>
-                            <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/ULRS1032-Integrity%20and%20Anti-Corruption" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
-                        </div>
-                    </div>
-
-                    <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Content for this semester will be added soon.</p>
+                            <h4>Integrity & Anti-Corruption</h4>
+                            <p>Ethics and social integrity policies.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="year2" class="year-content">
-                <div class="glass-card">
-                    <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
-                        </div>
-                    </div>
-                    <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="glass-card"><p>Upcoming Data Engineering modules (Database, Algorithms, AI).</p></div>
             </div>
-
             <div id="year3" class="year-content">
-                <div class="glass-card">
-                    <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Industry placement / Advanced Modules.</p>
-                        </div>
-                    </div>
-                    <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Industry placement / Advanced Modules.</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="glass-card"><p>Industry Placement & Advanced Analytics.</p></div>
             </div>
-
             <div id="year4" class="year-content">
-                <div class="glass-card">
-                    <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Final Year Project / Specialization.</p>
-                        </div>
-                    </div>
-                    <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.5;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">Graduation preparation.</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="glass-card"><p>Final Year Project & Specialization.</p></div>
             </div>
         </section>
 
         <section id="projects" class="page-section">
-            <div class="section-header">
-                <h2>Projects & Reflections</h2>
-            </div>
-            
+            <div class="section-header"><h2>Projects & Reflections</h2></div>
             <div class="projects-grid">
                 <div class="glass-card project-card" onclick="openModal(1)">
-                    <div>
-                        <h3>Design Thinking Project</h3>
-                        <p class="project-desc">System to regulate library and study space utilization at UTM.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">Canva</span>
-                        <span class="skill-badge">Design Thinking</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
+                    <h3>Design Thinking Project</h3>
+                    <p class="project-desc">System to regulate library and study space utilization at UTM.</p>
+                    <span class="highlight">View Details →</span>
                 </div>
-
                 <div class="glass-card project-card" onclick="openModal(2)">
-                    <div>
-                        <h3>E-Portfolio Website</h3>
-                        <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">HTML</span>
-                        <span class="skill-badge">CSS</span>
-                        <span class="skill-badge">JS</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
+                    <h3>E-Portfolio Website</h3>
+                    <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
+                    <span class="highlight">View Details →</span>
                 </div>
-
                 <div class="glass-card project-card" onclick="openModal(3)">
-                    <div>
-                        <h3>ASEAN Quantum Summit</h3>
-                        <p class="project-desc">Insights on quantum computing transforming Johor.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">Research</span>
-                        <span class="skill-badge">Future Tech</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
+                    <h3>ASEAN Quantum Summit</h3>
+                    <p class="project-desc">Insights on quantum computing transforming Johor.</p>
+                    <span class="highlight">View Details →</span>
                 </div>
-
-                <div class="glass-card project-card" style="border-style: dashed; opacity: 0.6; cursor: default;">
-                    <div>
-                        <h3 style="color: var(--text-muted);">Coming Soon</h3>
-                        <p class="project-desc">Currently working on the next big thing.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge" style="border-style: dashed;">TBA</span>
-                        <div style="margin-top: 15px; color: var(--primary-dim);">
-                            <i class="fas fa-code" style="font-size: 1.5rem;"></i>
-                        </div>
-                    </div>
+                <div class="glass-card project-card">
+                    <h3>Coming Soon</h3>
+                    <p class="project-desc">Python-based Data Analysis project currently in development.</p>
+                    <span class="highlight">Status: Active</span>
                 </div>
-
-                <div class="glass-card project-card" style="border-style: dashed; opacity: 0.6; cursor: default;">
-                    <div>
-                        <h3 style="color: var(--text-muted);">Future Project</h3>
-                        <p class="project-desc">Loading ideas...</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge" style="border-style: dashed;">Python</span>
-                        <span class="skill-badge" style="border-style: dashed;">AI</span>
-                        <div style="margin-top: 15px; color: var(--primary-dim);">
-                            <i class="fas fa-terminal" style="font-size: 1.5rem;"></i>
-                        </div>
-                    </div>
+                <div class="glass-card project-card">
+                    <h3>Future Project</h3>
+                    <p class="project-desc">Automated ETL Pipeline using SQL and cloud integrations.</p>
+                    <span class="highlight">Status: Planning</span>
                 </div>
-
-                <div class="glass-card project-card" style="border-style: dashed; opacity: 0.6; cursor: default;">
-                    <div>
-                        <h3 style="color: var(--text-muted);">Under Construction</h3>
-                        <p class="project-desc">This space is reserved for future coursework assignments.</p>
-                    </div>
-                    <div>
-                         <span class="skill-badge" style="border-style: dashed;">C++</span>
-                        <div style="margin-top: 15px; color: var(--primary-dim);">
-                            <i class="fas fa-layer-group" style="font-size: 1.5rem;"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="github-promo glass-card">
-                <i class="fab fa-github github-icon-large"></i>
-                <h3>Want to see more code?</h3>
-                <p>These are just the highlights. Check out my GitHub profile to see all my repositories, side projects, and assignments.</p>
-                <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="cta-btn">
-                    Visit My GitHub
-                </a>
             </div>
         </section>
 
         <section id="contact" class="page-section">
-            <div class="section-header">
-                <h2>Get In Touch</h2>
-            </div>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <a href="mailto:farhanaidil2026@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
-                    <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
-                    <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-link"><i class="fab fa-github"></i><span>GitHub</span></a>
-                </div>
-                
-                <div class="glass-card">
-                    <div class="contact-content-box">
-                        <div class="contact-visual"></div>
-                        <div class="contact-form-container">
-                            <form onsubmit="event.preventDefault(); alert('Message sent!');">
-                                <div class="form-group"><label>Name</label><input type="text" class="form-control"></div>
-                                <div class="form-group"><label>Email</label><input type="email" class="form-control"></div>
-                                <div class="form-group"><label>Message</label><textarea rows="5" class="form-control"></textarea></div>
-                                <button class="cta-btn" style="width: 100%;">Send Message</button>
-                            </form>
-                        </div>
-                    </div>
+            <div class="section-header"><h2>Get In Touch</h2></div>
+            <div class="glass-card" style="text-align: center;">
+                <p>Establishing communication protocols...</p><br>
+                <div style="display: flex; justify-content: center; gap: 30px;">
+                    <a href="mailto:farhanaidil2026@gmail.com" style="color:var(--primary); font-size: 2rem;"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/aidil-farhan-475589396/" style="color:var(--primary); font-size: 2rem;"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/farhanaidil2026-ui" style="color:var(--primary); font-size: 2rem;"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </section>
@@ -750,71 +270,55 @@
     <div id="project-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal(event)">&times;</span>
-            <img id="modal-image" class="modal-img" src="" alt="Project Image">
+            <img id="modal-image" class="modal-img" src="" alt="">
             <div class="modal-body">
-                <h2 id="modal-title" class="modal-title" style="text-align: left; border: none; margin: 0; box-shadow: none; left: 0; transform: none;">Project Title</h2>
-                <div class="modal-subtitle">Summary</div>
-                <p id="modal-summary" class="modal-text">Project summary goes here.</p>
-                <div class="modal-subtitle">Personal Reflection</div>
-                <p id="modal-reflection" class="modal-text">Personal reflection goes here.</p>
+                <h2 id="modal-title" style="border:none; margin:0;"></h2>
+                <p id="modal-summary" style="margin: 20px 0; color:#ccc;"></p>
+                <h4 class="highlight">Reflection</h4>
+                <p id="modal-reflection" style="font-style: italic;"></p>
             </div>
         </div>
     </div>
 
     <script>
-      
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            const buttons = document.querySelectorAll('.nav-btn');
-            for(let btn of buttons) {
-                if(btn.textContent.toLowerCase() === pageId) btn.classList.add('active');
-            }
+            event.target.classList.add('active');
         }
 
-  
         function openYear(evt, yearName) {
-       
-            const yearContents = document.getElementsByClassName("year-content");
-            for (let i = 0; i < yearContents.length; i++) {
-                yearContents[i].classList.remove("active");
-            }
-      
-            const yearBtns = document.getElementsByClassName("year-btn");
-            for (let i = 0; i < yearBtns.length; i++) {
-                yearBtns[i].classList.remove("active");
-            }
-       
+            document.querySelectorAll(".year-content").forEach(c => c.classList.remove("active"));
+            document.querySelectorAll(".year-btn").forEach(b => b.classList.remove("active"));
             document.getElementById(yearName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
-    
         const projectData = {
             1: {
                 title: "Design Thinking Project",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202025-12-30%20223806.png?raw=true", 
-                summary: "This project focused on designing a system to regulate library and study space utilization at UTM. We identified overcrowding issues and proposed a digital reservation system.",
-                reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
+                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202025-12-30%20223806.png?raw=true",
+                summary: "Developed a system to regulate library occupancy at UTM.",
+                reflection: "Learned that empathy-driven design is key to technical success."
             },
             2: {
                 title: "E-Portfolio Website",
                 image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
-                summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
-                reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence. It serves as a living document of my growth."
+                summary: "This custom-built matrix portfolio using JS and CSS variables.",
+                reflection: "Mastered responsive layouts and canvas animations."
             },
             3: {
                 title: "ASEAN Quantum Summit",
                 image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true",
-                summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
-                reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds, problems that take classical computers days was inspiring. It motivated me to study linear algebra more deeply."
+                summary: "Analysis of quantum computing's role in the regional digital economy.",
+                reflection: "Realized the future of data engineering is tied to quantum optimization."
             }
         };
 
         function openModal(id) {
             const data = projectData[id];
-            document.getElementById('modal-image').src = data.image; 
+            document.getElementById('modal-image').src = data.image;
             document.getElementById('modal-title').innerText = data.title;
             document.getElementById('modal-summary').innerText = data.summary;
             document.getElementById('modal-reflection').innerText = data.reflection;
@@ -822,59 +326,45 @@
         }
 
         function closeModal(e) {
-            if (e.target === document.getElementById('project-modal') || e.target.classList.contains('modal-close')) {
+            if (e.target.id === 'project-modal' || e.target.classList.contains('modal-close')) {
                 document.getElementById('project-modal').style.display = 'none';
             }
         }
 
-      
+        // MATRIX BG
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         let matrixColor = '#00ff41';
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.onresize = resize; resize();
 
-        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/-+*';
-        const charArray = chars.split('');
+        const chars = '01AIDILFARHAN2026';
         const fontSize = 15;
-        let columns = canvas.width / fontSize;
-        let drops = [];
-        for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = matrixColor; 
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = charArray[Math.floor(Math.random() * charArray.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 40);
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
-    
-        function triggerGlitch() {
-            const glitchDuration = Math.random() * 1800 + 200; 
+        function draw() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = matrixColor;
+            ctx.font = fontSize + 'px monospace';
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+        setInterval(draw, 40);
+
+        setInterval(() => {
             document.documentElement.classList.add('glitch-mode');
-            matrixColor = '#ff003c'; 
+            matrixColor = '#ff003c';
             setTimeout(() => {
                 document.documentElement.classList.remove('glitch-mode');
-                matrixColor = '#00ff41'; 
-                scheduleNextGlitch();
-            }, glitchDuration);
-        }
-
-        function scheduleNextGlitch() {
-            const nextTime = Math.random() * 10000 + 5000; 
-            setTimeout(triggerGlitch, nextTime);
-        }
-        
-        scheduleNextGlitch();
+                matrixColor = '#00ff41';
+            }, 1000);
+        }, 12000);
     </script>
 </body>
 </html>
