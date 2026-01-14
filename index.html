@@ -52,7 +52,9 @@
         .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
         .nav-btn.active::after { width: 100%; }
 
-        main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; }
+        /* Ensure main handles the scroll */
+        main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; scroll-behavior: smooth; }
+        
         .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
         .page-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -613,7 +615,6 @@
             </div>
 
             <div class="projects-grid">
-                <!-- Existing project 1 -->
                 <div class="glass-card project-card" onclick="openModal(1)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Untitled%20design.png?raw=true" class="project-thumb" alt="Design Thinking Project">
@@ -627,7 +628,6 @@
                     </div>
                 </div>
 
-                <!-- Existing project 2 -->
                 <div class="glass-card project-card" onclick="openModal(2)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202026-01-14%20224213.png?raw=true" class="project-thumb" alt="E-Portfolio">
@@ -642,7 +642,6 @@
                     </div>
                 </div>
 
-                <!-- Existing project 3 -->
                 <div class="glass-card project-card" onclick="openModal(3)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true" class="project-thumb" alt="ASEAN Quantum Summit">
@@ -656,7 +655,6 @@
                     </div>
                 </div>
 
-                <!-- Existing project 4 -->
                 <div class="glass-card project-card" onclick="openModal(4)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-14_22-27-08.jpg?raw=true" class="project-thumb" alt="Timetable Optimizer">
@@ -671,7 +669,6 @@
                     </div>
                 </div>
 
-                <!-- Existing project 5 -->
                 <div class="glass-card project-card" onclick="openModal(5)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/lift.jpg?raw=true" class="project-thumb" alt="Coursework Snippets">
@@ -685,7 +682,6 @@
                     </div>
                 </div>
 
-                <!-- Existing project 6 -->
                 <div class="glass-card project-card" onclick="openModal(6)">
                     <div>
                         <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/integriti.jpg?raw=true" class="project-thumb" alt="Data Viz">
@@ -754,18 +750,34 @@
         </div>
     </div>
 
-<script>
-    
+    <script>
         function showPage(pageId) {
+            // Check if pageId is valid to prevent errors
+            if(!document.getElementById(pageId)) return;
+
+            // Remove active class from all sections
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            
+            // Remove active class from all nav buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            // Activate the specific section
             document.getElementById(pageId).classList.add('active');
+            
+            // Find and activate the correct button
             const buttons = document.querySelectorAll('.nav-btn');
             for(let btn of buttons) {
-                if(btn.textContent.toLowerCase() === pageId) btn.classList.add('active');
+                // We use .toLowerCase() to match 'Home' with 'home', etc.
+                if(btn.textContent.trim().toLowerCase() === pageId) {
+                    btn.classList.add('active');
+                }
             }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Fix for scroll: Scroll the 'main' container, not the window
+            const mainContent = document.querySelector('main');
+            if(mainContent) {
+                mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function openYear(evt, yearName) {
@@ -781,6 +793,7 @@
             evt.currentTarget.classList.add("active");
         }
 
+        // Corrected Data Object
         const projectData = {
             1: {
                 title: "Design Thinking Project",
@@ -852,7 +865,6 @@
         for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
 
         function drawMatrix() {
-
             ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = matrixColor;
