@@ -754,8 +754,8 @@
         </div>
     </div>
 
-    <script>
-
+<script>
+    
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -830,15 +830,6 @@
             document.getElementById('project-modal').style.display = 'flex';
         }
 
-            const d = placeholders[key];
-            if (!d) return;
-            document.getElementById('modal-image').src = d.image;
-            document.getElementById('modal-title').innerText = d.title;
-            document.getElementById('modal-summary').innerText = d.summary;
-            document.getElementById('modal-reflection').innerText = d.reflection;
-            document.getElementById('project-modal').style.display = 'flex';
-        }
-
         function closeModal(e) {
             if (e.target === document.getElementById('project-modal') || e.target.classList.contains('modal-close')) {
                 document.getElementById('project-modal').style.display = 'none';
@@ -881,9 +872,7 @@
         }
         setInterval(drawMatrix, 40);
 
-
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('project-modal').style.display = 'none'; } });
-
     </script>
 </body>
 </html>
