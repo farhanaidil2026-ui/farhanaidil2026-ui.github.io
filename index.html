@@ -52,7 +52,6 @@
         .nav-btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
         .nav-btn.active::after { width: 100%; }
 
-        /* Ensure main handles the scroll */
         main { flex: 1; position: relative; overflow-y: auto; padding: 40px 20px; scroll-behavior: smooth; }
         
         .page-section { display: none; max-width: 1200px; margin: 0 auto; animation: slideIn 0.5s ease forwards; padding-bottom: 50px; }
@@ -81,34 +80,47 @@
         }
         .glass-card:hover { transform: translateY(-5px); box-shadow: 0 0 20px var(--primary-dim); border-color: var(--primary); }
 
-        .home-container { display: flex; align-items: center; justify-content: space-between; min-height: 70vh; gap: 50px; }
-        .home-text { flex: 1; }
+        .home-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 80vh; gap: 20px; }
+        .home-text { max-width: 800px; }
         .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
         .home-text .highlight { color: var(--primary); text-shadow: 0 0 10px var(--primary-dim); transition: color 0.2s; }
-        .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; max-width: 600px; }
+        .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px; }
         .cta-btn {
             padding: 12px 30px; background: transparent; color: var(--primary); border: 1px solid var(--primary);
             font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.3s; text-decoration: none;
             display: inline-block; letter-spacing: 1px;
+            margin-top: 10px;
         }
         .cta-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
 
-        .home-images { flex: 1; position: relative; height: 500px; display: flex; justify-content: center; align-items: center; }
-        .hero-img {
-            width: 280px; height: 400px;
-            object-fit: cover;
-            position: absolute;
-            border: 1px solid rgba(255,255,255,0.2);
-            filter: grayscale(100%);
-            transition: 0.5s;
-            border-radius: 4px;
+        .home-images { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 20px; 
+            width: 100%; 
+            max-width: 900px; 
+            perspective: 1200px;
+            margin: 15px 0;
         }
-        .img-1 { transform: rotate(-5deg) translateX(-40px); z-index: 1; }
-        .img-2 { transform: rotate(5deg) translateX(40px) translateY(20px); z-index: 2; }
+        .hero-img {
+            width: 200px; height: 300px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            filter: grayscale(100%);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .img-1 { transform: rotateY(25deg) translateY(20px); }
+        .img-2 { transform: scale(1.1) translateY(-10px); z-index: 5; border-color: var(--primary-dim); }
+        .img-3 { transform: rotateY(-25deg) translateY(20px); }
+        
         .hero-img:hover {
-            z-index: 10;
             filter: grayscale(0%);
-            transform: scale(1.05) rotate(0deg);
+            transform: scale(1.15) rotate(0deg) translateY(-20px);
+            z-index: 10;
             border-color: var(--primary);
             box-shadow: 0 0 30px var(--primary-dim);
         }
@@ -328,10 +340,13 @@
         .form-control:focus { outline: none; border-color: var(--primary); }
 
         @media (max-width: 768px) {
-            .home-container { flex-direction: column; text-align: center; }
+            .home-container { gap: 20px; }
+            .home-text h1 { font-size: 2.5rem; }
             .nav-links { gap: 10px; font-size: 0.8rem; }
             nav { padding: 15px; }
-            .hero-img { width: 80%; height: auto; }
+            .home-images { gap: 10px; perspective: none; }
+            .hero-img { width: 100px; height: 160px; transform: none !important; }
+            .hero-img:hover { transform: scale(1.1) !important; }
             .contact-content-box { flex-direction: column; }
             .contact-visual { height: 200px; }
         }
@@ -358,14 +373,16 @@
                 <div class="home-text">
                     <p>Greetings</p>
                     <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
-                    <p>Computer Science (Data Engineering) student at UTM</p>
-                    <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
+                    <p>Computer Science (Data Engineering) student @ UTM</p>
                 </div>
 
                 <div class="home-images">
-                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_7_2025-12-30_20-50-34.jpg?raw=true" class="hero-img img-1" alt="Profile 1">
-                    <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Gambar%20Profile.jpg?raw=true" class="hero-img img-2" alt="Profile 2">
+                    <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_7_2025-12-30_20-50-34.jpg" class="hero-img img-1" alt="Profile 1">
+                    <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-24-43.jpg" class="hero-img img-2" alt="Profile 2">
+                    <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Gambar%20Profile.jpg" class="hero-img img-3" alt="Profile 3">
                 </div>
+
+                <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
             </div>
         </section>
 
@@ -376,7 +393,7 @@
 
             <p class="about-intro">
                 <br>
-                I'm currently enrolled in the 2u2i program at UTM, combining 2 years of university study with 2 years of industry experience.
+                I'm currently enrolled in the 2u2i program @ UTM, combining 2 years of university study with 2 years of industry experience.
             </p>
 
             <div class="glass-card">
@@ -405,19 +422,22 @@
                 <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_5_2026-01-14_22-27-08.jpg?raw=true" alt="Campus Life">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-14_22-27-08.jpg?raw=true" alt="Coding Session">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_4_2026-01-14_22-27-08.jpg" alt="Coding Session">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-14_22-27-08.jpg?raw=true" alt="Event">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" alt="Event">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2026-01-14_22-27-08.jpg?raw=true" alt="Group Study">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-14_22-27-08.jpg" alt="Group Study">
                     </div>
                     <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-14_22-27-08.jpg?raw=true" alt="Group Study">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_2_2026-01-14_22-27-08.jpg" alt="Group Study">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-26-32.jpg" alt="Gallery New">
                     </div>
                 </div>
             </div>
@@ -620,9 +640,9 @@
             <div class="projects-grid">
                 <div class="glass-card project-card" onclick="openModal(1)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Untitled%20design.png?raw=true" class="project-thumb" alt="Design Thinking Project">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Untitled%20design.png" class="project-thumb" alt="Design Thinking Project">
                         <h3>Design Thinking Project</h3>
-                        <p class="project-desc">System to regulate library and study space utilization at UTM.</p>
+                        <p class="project-desc">System to regulate library and study space utilization @ UTM.</p>
                     </div>
                     <div>
                         <span class="skill-badge">Canva</span>
@@ -633,7 +653,7 @@
 
                 <div class="glass-card project-card" onclick="openModal(2)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202026-01-14%20224213.png?raw=true" class="project-thumb" alt="E-Portfolio">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Screenshot%202026-01-14%20224213.png" class="project-thumb" alt="E-Portfolio">
                         <h3>E-Portfolio Website</h3>
                         <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
                     </div>
@@ -647,7 +667,7 @@
 
                 <div class="glass-card project-card" onclick="openModal(3)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true" class="project-thumb" alt="ASEAN Quantum Summit">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2025-12-30_22-32-47.jpg" class="project-thumb" alt="ASEAN Quantum Summit">
                         <h3>ASEAN Quantum Summit</h3>
                         <p class="project-desc">Insights on quantum computing transforming Johor.</p>
                     </div>
@@ -660,9 +680,9 @@
 
                 <div class="glass-card project-card" onclick="openModal(4)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-14_22-27-08.jpg?raw=true" class="project-thumb" alt="Timetable Optimizer">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" class="project-thumb" alt="Timetable Optimizer">
                         <h3>Industry Visit</h3>
-                        <p class="project-desc">Exposure into real-world industry at Johor Corporation (JCorp).</p>
+                        <p class="project-desc">Exposure into real-world industry @ Johor Corporation (JCorp).</p>
                     </div>
                     <div>
                         <span class="skill-badge">Soft-Skills</span>
@@ -674,7 +694,7 @@
 
                 <div class="glass-card project-card" onclick="openModal(5)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/lift.jpg?raw=true" class="project-thumb" alt="Coursework Snippets">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/lift.jpg" class="project-thumb" alt="Coursework Snippets">
                         <h3>Digital Logic Lift System</h3>
                         <p class="project-desc">Build a working lift system using binary codes.</p>
                     </div>
@@ -687,7 +707,7 @@
 
                 <div class="glass-card project-card" onclick="openModal(6)">
                     <div>
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/integriti.jpg?raw=true" class="project-thumb" alt="Data Viz">
+                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/integriti.jpg" class="project-thumb" alt="Data Viz">
                         <h3>Integrity And Anti-Corruption</h3>
                         <p class="project-desc">A play showcasing the importance of integrity in daily life.</p>
                     </div>
@@ -755,28 +775,16 @@
 
     <script>
         function showPage(pageId) {
-            // Check if pageId is valid to prevent errors
             if(!document.getElementById(pageId)) return;
-
-            // Remove active class from all sections
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            
-            // Remove active class from all nav buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            // Activate the specific section
             document.getElementById(pageId).classList.add('active');
-            
-            // Find and activate the correct button
             const buttons = document.querySelectorAll('.nav-btn');
             for(let btn of buttons) {
-                // We use .toLowerCase() to match 'Home' with 'home', etc.
                 if(btn.textContent.trim().toLowerCase() === pageId) {
                     btn.classList.add('active');
                 }
             }
-
-            // Fix for scroll: Scroll the 'main' container, not the window
             const mainContent = document.querySelector('main');
             if(mainContent) {
                 mainContent.scrollTo({ top: 0, behavior: 'smooth' });
@@ -796,12 +804,11 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // Corrected Data Object
         const projectData = {
             1: {
                 title: "Design Thinking Project",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/Screenshot%202025-12-30%20223806.png?raw=true",
-                summary: "This project focused on designing a system to regulate library and study space utilization at UTM. We identified overcrowding issues and proposed a digital reservation system.",
+                image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Screenshot%202025-12-30%20223806.png",
+                summary: "This project focused on designing a system to regulate library and study space utilization @ UTM. We identified overcrowding issues and proposed a digital reservation system.",
                 reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
             },
             2: {
@@ -812,25 +819,25 @@
             },
             3: {
                 title: "ASEAN Quantum Summit",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_1_2025-12-30_22-32-47.jpg?raw=true",
+                image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2025-12-30_22-32-47.jpg",
                 summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
                 reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds, problems that take classical computers days was inspiring. It motivated me to study linear algebra more deeply."
             },
             4: {
                 title: "Industry Visit",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-14_22-27-08.jpg?raw=true",
+                image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg",
                 summary: "I had the opportunity to visit Johor Corporation (JCorp) which allowed me to experience and gain deeper knowledge about the real-world industry.",
                 reflection: "This industry visit opened my eyes to the truth of a company, teaching me about the behind-the-scenes planning and data-driven decisions."
             },
             5: {
                 title: "Digital Logic Lift System",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/lift.jpg?raw=true",
+                image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/lift.jpg",
                 summary: "This project focused on applying our knowledge of Digital Logic into building a practical day-to-day system.",
                 reflection: "This project taught me of the importance of proper planning, time management and good communication between team members to finish the project in schedule and submit-worthy condition."
             },
             6: {
                 title: "Integrity And Anti-Corruption",
-                image: "https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/integriti.jpg?raw=true",
+                image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/integriti.jpg",
                 summary: "My group created a video roleplaying an immigration officer accepting a bribe from an immigrant with expired Visa and accepting the consequences of it.",
                 reflection: "This assignment opened my eyes about the importance of having integrity in everything we do and the grim consequences of lacking integrity to the self and ultimately to our beloved country."
             }
