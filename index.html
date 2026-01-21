@@ -83,7 +83,13 @@
         .home-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 80vh; gap: 20px; }
         .home-text { max-width: 800px; }
         .home-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
-        .home-text .highlight { color: var(--primary); text-shadow: 0 0 10px var(--primary-dim); transition: color 0.2s; }
+        .home-text .highlight { 
+            color: var(--primary); 
+            text-shadow: 0 0 10px var(--primary-dim); 
+            transition: color 0.2s; 
+            font-family: monospace; /* Added for better hacker effect look */
+            cursor: pointer; /* To indicate interactivity */
+        }
         .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px; }
         .cta-btn {
             padding: 12px 30px; background: transparent; color: var(--primary); border: 1px solid var(--primary);
@@ -421,20 +427,6 @@
                 <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
                 <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
                 <div class="gallery-grid">
-                    <!-- Added your 4 new images here -->
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-20_17-07-40.jpg?raw=true" alt="Campus Activity">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-20_17-07-40.jpg?raw=true" alt="UTM Event">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-20_17-07-40.jpg?raw=true" alt="Study Session">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/profile.jpg?raw=true" alt="Personal Profile">
-                    </div>
-                    <!-- Existing images continue below -->
                     <div class="gallery-item">
                         <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life">
                     </div>
@@ -585,19 +577,63 @@
             <div id="year2" class="year-content">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid"><div class="subject-card" style="opacity: 0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">Content will be unlocked in Year 2.</p></div></div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 2.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div id="year3" class="year-content">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid"><div class="subject-card" style="opacity: 0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">Content will be unlocked in Year 3.</p></div></div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 3.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 3.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div id="year4" class="year-content">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid"><div class="subject-card" style="opacity: 0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">Content will be unlocked in Year 4.</p></div></div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 4.</p>
+                        </div>
+                    </div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid">
+                        <div class="subject-card" style="opacity: 0.7;">
+                            <span class="subject-code">TBA</span>
+                            <div class="subject-name">Upcoming</div>
+                            <p class="subject-desc">Content will be unlocked in Year 4.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -756,14 +792,20 @@
                 }
             }
             const mainContent = document.querySelector('main');
-            if(mainContent) { mainContent.scrollTo({ top: 0, behavior: 'smooth' }); }
+            if(mainContent) {
+                mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function openYear(evt, yearName) {
             const yearContents = document.getElementsByClassName("year-content");
-            for (let i = 0; i < yearContents.length; i++) { yearContents[i].classList.remove("active"); }
+            for (let i = 0; i < yearContents.length; i++) {
+                yearContents[i].classList.remove("active");
+            }
             const yearBtns = document.getElementsByClassName("year-btn");
-            for (let i = 0; i < yearBtns.length; i++) { yearBtns[i].classList.remove("active"); }
+            for (let i = 0; i < yearBtns.length; i++) {
+                yearBtns[i].classList.remove("active");
+            }
             document.getElementById(yearName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
@@ -772,38 +814,38 @@
             1: {
                 title: "Design Thinking Project",
                 image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Screenshot%202025-12-30%20223806.png",
-                summary: "This project focused on designing a system to regulate library and study space utilization @ UTM.",
-                reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless."
+                summary: "This project focused on designing a system to regulate library and study space utilization @ UTM. We identified overcrowding issues and proposed a digital reservation system.",
+                reflection: "I learned that empathy is the core of design thinking. Interviewing students made me realize that a technical solution isn't enough; the user experience must be seamless. Using Canva for prototyping helped me visualize the flow before writing any code."
             },
             2: {
                 title: "E-Portfolio Website",
                 image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
-                summary: "A personal portfolio built to showcase my academic and professional journey.",
-                reflection: "Building this site from scratch taught me the importance of clean code structure. It serves as a living document of my growth."
+                summary: "A personal portfolio built to showcase my academic and professional journey. It uses HTML, CSS, and JavaScript with a custom Matrix-themed aesthetic.",
+                reflection: "Building this site from scratch taught me the importance of clean code structure. I struggled initially with the responsive layout, but overcoming that gave me confidence. It serves as a living document of my growth."
             },
             3: {
                 title: "ASEAN Quantum Summit",
                 image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2025-12-30_22-32-47.jpg",
-                summary: "I attended a summit regarding the future of quantum computing in the ASEAN region.",
-                reflection: "The summit opened my eyes to the scale of data processing required in the future."
+                summary: "I attended a summit regarding the future of quantum computing in the ASEAN region and its potential impact on Johor's digital economy.",
+                reflection: "The summit opened my eyes to the scale of data processing required in the future. As a Data Engineering student, realizing that quantum computers could solve optimization problems in seconds, problems that take classical computers days was inspiring. It motivated me to study linear algebra more deeply."
             },
             4: {
                 title: "Industry Visit",
                 image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg",
-                summary: "Industry visit to JCorp to experience real-world planning and data-driven decisions.",
-                reflection: "This taught me about the behind-the-scenes management of a large corporation."
+                summary: "I had the opportunity to visit Johor Corporation (JCorp) which allowed me to experience and gain deeper knowledge about the real-world industry.",
+                reflection: "This industry visit opened my eyes to the truth of a company, teaching me about the behind-the-scenes planning and data-driven decisions."
             },
             5: {
                 title: "Digital Logic Lift System",
                 image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/lift.jpg",
-                summary: "Applying Digital Logic knowledge into building a practical day-to-day lift system.",
-                reflection: "Taught me the importance of team collaboration and proper system planning."
+                summary: "This project focused on applying our knowledge of Digital Logic into building a practical day-to-day system.",
+                reflection: "This project taught me of the importance of proper planning, time management and good communication between team members to finish the project in schedule and submit-worthy condition."
             },
             6: {
                 title: "Integrity And Anti-Corruption",
                 image: "https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/integriti.jpg",
-                summary: "A video roleplaying an immigration officer and the consequences of corruption.",
-                reflection: "Highlighting the importance of integrity in professional and daily life."
+                summary: "My group created a video roleplaying an immigration officer accepting a bribe from an immigrant with expired Visa and accepting the consequences of it.",
+                reflection: "This assignment opened my eyes about the importance of having integrity in everything we do and the grim consequences of lacking integrity to the self and ultimately to our beloved country."
             }
         };
 
@@ -843,6 +885,7 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = matrixColor;
             ctx.font = fontSize + 'px monospace';
+
             if (Math.floor(canvas.width / fontSize) !== columns) {
                 columns = Math.floor(canvas.width / fontSize);
                 drops = [];
@@ -856,7 +899,52 @@
             }
         }
         setInterval(drawMatrix, 40);
+
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('project-modal').style.display = 'none'; } });
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let interval = null;
+
+        function startHackerEffect(element) {
+            let iteration = 0;
+            const originalText = element.dataset.value; 
+            
+            clearInterval(interval);
+            
+            interval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if(letter === " ") return " ";
+                        
+                        if(index < iteration) {
+                            return originalText[index];
+                        }
+                        return letters[Math.floor(Math.random() * 36)];
+                    })
+                    .join("");
+                
+                if(iteration >= originalText.length) { 
+                    clearInterval(interval);
+                }
+                
+                iteration += 1 / 3;
+            }, 30);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const heading = document.querySelector("h1 span.highlight");
+            
+            if(heading) {
+                heading.dataset.value = heading.innerText;
+                
+                heading.addEventListener("mouseover", event => {
+                    startHackerEffect(event.target);
+                });
+                
+                startHackerEffect(heading);
+            }
+        });
     </script>
 </body>
 </html>
