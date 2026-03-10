@@ -87,8 +87,8 @@
             color: var(--primary); 
             text-shadow: 0 0 10px var(--primary-dim); 
             transition: color 0.2s; 
-            font-family: monospace; /* Added for better hacker effect look */
-            cursor: pointer; /* To indicate interactivity */
+            font-family: monospace;
+            cursor: pointer;
         }
         .home-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 10px; }
         .cta-btn {
@@ -175,70 +175,9 @@
             filter: grayscale(80%);
         }
         .gallery-item:hover { border-color: var(--primary); }
-        .gallery-item:hover img {
-            transform: scale(1.1);
-            filter: grayscale(0%);
-        }
+        .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-        .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; }
-        .project-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
-        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
-        .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
-        .project-card:hover .click-hint { opacity: 1; }
-
-        .project-thumb {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            filter: grayscale(70%);
-            transition: 0.4s;
-            border: 1px solid var(--primary-dim);
-        }
-        .project-card:hover .project-thumb {
-            filter: grayscale(0%);
-            border-color: var(--primary);
-        }
-
-        .inline-image {
-            margin: 20px 0;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 1px solid var(--primary-dim);
-        }
-        .inline-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(60%);
-            transition: 0.4s;
-        }
-        .inline-image:hover img {
-            filter: grayscale(0%);
-            transform: scale(1.02);
-        }
-
-        .github-promo {
-            margin-top: 120px;
-            text-align: center;
-            padding: 50px 20px;
-            border: 2px dashed var(--primary);
-            background: rgba(0, 255, 65, 0.02);
-            transition: 0.3s;
-        }
-        .github-promo:hover { background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 30px var(--primary-dim); }
-        .github-icon-large { font-size: 4rem; color: #fff; margin-bottom: 20px; transition: 0.5s; display: inline-block; }
-        .github-promo:hover .github-icon-large { color: var(--primary); transform: scale(1.2) rotate(360deg); }
-        .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
-        .github-promo .cta-btn { margin-top: 40px; }
-
+        /* ── Year / Semester tabs ── */
         .year-tabs {
             display: flex;
             justify-content: center;
@@ -262,13 +201,10 @@
             color: var(--primary);
             box-shadow: 0 0 15px var(--primary-dim);
         }
-        .year-content {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        .year-content.active {
-            display: block;
-        }
+        .year-content { display: none; animation: fadeIn 0.5s; }
+        .year-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         .semester-title {
             color: var(--primary);
             font-size: 1.4rem;
@@ -276,6 +212,9 @@
             border-left: 3px solid var(--primary);
             padding-left: 15px;
         }
+        .semester-title:first-child { margin-top: 0; }
+
+        /* ── Coursework ── */
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -288,10 +227,7 @@
             border-radius: 5px;
             transition: 0.3s;
         }
-        .subject-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
+        .subject-card:hover { border-color: var(--primary); transform: translateY(-3px); }
         .subject-code {
             font-family: monospace;
             background: rgba(255,255,255,0.1);
@@ -300,27 +236,84 @@
             font-size: 0.85rem;
             color: var(--primary);
         }
-        .subject-name {
-            font-size: 1.1rem;
-            color: #fff;
-            margin: 10px 0;
-            font-weight: 600;
-        }
-        .subject-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-        .subject-link {
-            display: inline-block;
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
+        .subject-name { font-size: 1.1rem; color: #fff; margin: 10px 0; font-weight: 600; }
+        .subject-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
+        .subject-link { display: inline-block; color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: bold; }
         .subject-link:hover { text-decoration: underline; }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
+        /* ── Project cards ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .project-card { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; margin: 0 !important; }
+        .project-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px; }
+        .click-hint { font-size: 0.8rem; color: var(--primary); margin-top: 10px; opacity: 0; transition: 0.3s; }
+        .project-card:hover .click-hint { opacity: 1; }
+
+        .project-thumb {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            filter: grayscale(70%);
+            transition: 0.4s;
+            border: 1px solid var(--primary-dim);
+        }
+        .project-card:hover .project-thumb { filter: grayscale(0%); border-color: var(--primary); }
+
+        /* Upcoming placeholder */
+        .project-card-upcoming {
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+        .project-card-upcoming:hover { transform: none !important; box-shadow: none !important; border-color: rgba(0,255,65,0.3) !important; }
+        .project-thumb-placeholder {
+            width: 100%;
+            height: 170px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px dashed rgba(0,255,65,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,255,65,0.02);
+            color: var(--text-muted);
+            font-size: 2.5rem;
+        }
+
+        /* Semester section wrapper inside projects – no extra hover lift */
+        .semester-section {
+            background: var(--card-bg);
+            border: var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        /* ── GitHub promo ── */
+        .github-promo {
+            margin-top: 40px;
+            text-align: center;
+            padding: 50px 20px;
+            border: 2px dashed var(--primary);
+            background: rgba(0,255,65,0.02);
+            transition: 0.3s;
+        }
+        .github-promo:hover { background: rgba(0,255,65,0.05); box-shadow: 0 0 30px var(--primary-dim); }
+        .github-icon-large { font-size: 4rem; color: #fff; margin-bottom: 20px; transition: 0.5s; display: inline-block; }
+        .github-promo:hover .github-icon-large { color: var(--primary); transform: scale(1.2) rotate(360deg); }
+        .github-promo h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .github-promo .cta-btn { margin-top: 40px; }
+
+        /* ── Modal ── */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; }
         .modal-content { background: #111; border: 1px solid var(--primary); width: 90%; max-width: 700px; padding: 0; border-radius: 10px; position: relative; box-shadow: 0 0 50px var(--primary-dim); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
         .modal-img { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid var(--primary); }
         .modal-body { padding: 30px; }
@@ -330,17 +323,16 @@
         .modal-subtitle { color: #fff; font-weight: bold; margin-top: 20px; margin-bottom: 10px; }
         .modal-text { color: #ccc; line-height: 1.6; margin-bottom: 15px; }
 
+        /* ── Contact ── */
         .contact-wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
         .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
         .contact-link { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
         .contact-link i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; transition: color 0.2s; }
         .contact-link:hover { color: #fff; transform: scale(1.1); }
-
         .contact-content-box { display: flex; gap: 30px; flex-wrap: wrap; }
         .contact-visual { flex: 1; min-width: 300px; height: 400px; background-image: url('https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=500&auto=format&fit=crop&q=60'); background-size: cover; background-position: center; border-radius: 8px; border: 1px solid var(--primary-dim); filter: grayscale(100%); transition: 0.5s; }
         .contact-visual:hover { filter: grayscale(0%); border-color: var(--primary); }
         .contact-form-container { flex: 1; min-width: 300px; }
-
         .form-group { margin-bottom: 20px; }
         .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border: 1px solid #333; color: #fff; border-radius: 4px; }
         .form-control:focus { outline: none; border-color: var(--primary); }
@@ -374,6 +366,8 @@
     </nav>
 
     <main>
+
+        <!-- ══════════════════════ HOME ══════════════════════ -->
         <section id="home" class="page-section active">
             <div class="home-container">
                 <div class="home-text">
@@ -381,26 +375,19 @@
                     <h1>I am Aidil Farhan<br><span class="highlight">Data Engineer</span></h1>
                     <p>Computer Science (Data Engineering) student @ UTM</p>
                 </div>
-
                 <div class="home-images">
                     <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_7_2025-12-30_20-50-34.jpg" class="hero-img img-1" alt="Profile 1">
                     <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-24-43.jpg" class="hero-img img-2" alt="Profile 2">
                     <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Gambar%20Profile.jpg" class="hero-img img-3" alt="Profile 3">
                 </div>
-
                 <button class="cta-btn" onclick="showPage('projects')">Explore My Work</button>
             </div>
         </section>
 
+        <!-- ══════════════════════ ABOUT ══════════════════════ -->
         <section id="about" class="page-section">
-            <div class="section-header">
-                <h2>About Me</h2>
-            </div>
-
-            <p class="about-intro">
-                <br>
-                I'm currently enrolled in the 2u2i program at Universiti Teknologi Malaysia, combining 2 years of university study with 2 years of industry experience.
-            </p>
+            <div class="section-header"><h2>About Me</h2></div>
+            <p class="about-intro"><br>I'm currently enrolled in the 2u2i program at Universiti Teknologi Malaysia, combining 2 years of university study with 2 years of industry experience.</p>
 
             <div class="glass-card">
                 <div class="about-section-title"><i class="fas fa-graduation-cap"></i> Academic Journey</div>
@@ -427,36 +414,16 @@
                 <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
                 <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
                 <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-20_17-07-40.jpg?raw=true" alt="Campus Activity">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-20_17-07-40.jpg?raw=true" alt="UTM Event">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-20_17-07-40.jpg?raw=true" alt="Study Session">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/profile.jpg?raw=true" alt="Personal Profile">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_4_2026-01-14_22-27-08.jpg" alt="Coding Session">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" alt="Event">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-14_22-27-08.jpg" alt="Group Study">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_2_2026-01-14_22-27-08.jpg" alt="Group Study">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-26-32.jpg" alt="Gallery New">
-                    </div>
+                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-20_17-07-40.jpg?raw=true" alt="Campus Activity"></div>
+                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-20_17-07-40.jpg?raw=true" alt="UTM Event"></div>
+                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-20_17-07-40.jpg?raw=true" alt="Study Session"></div>
+                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/profile.jpg?raw=true" alt="Personal Profile"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_4_2026-01-14_22-27-08.jpg" alt="Coding Session"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" alt="Event"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_2_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
+                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-26-32.jpg" alt="Gallery New"></div>
                 </div>
             </div>
 
@@ -493,54 +460,38 @@
                 <div class="about-section-title"><i class="fas fa-laptop-code"></i> Technical Arsenal</div>
                 <div class="skill-group">
                     <h4>Programming & Tools</h4>
-                    <span class="skill-badge">C++</span>
-                    <span class="skill-badge">Python</span>
-                    <span class="skill-badge">Java</span>
-                    <span class="skill-badge">VS Code</span>
-                    <span class="skill-badge">MS Office</span>
+                    <span class="skill-badge">C++</span><span class="skill-badge">Python</span><span class="skill-badge">Java</span><span class="skill-badge">VS Code</span><span class="skill-badge">MS Office</span>
                 </div>
                 <div class="skill-group">
                     <h4>Creative Software</h4>
-                    <span class="skill-badge">Canva</span>
-                    <span class="skill-badge">Clip Studio Paint</span>
-                    <span class="skill-badge">Krita</span>
-                    <span class="skill-badge">Photoshop</span>
-                    <span class="skill-badge">CapCut</span>
+                    <span class="skill-badge">Canva</span><span class="skill-badge">Clip Studio Paint</span><span class="skill-badge">Krita</span><span class="skill-badge">Photoshop</span><span class="skill-badge">CapCut</span>
                 </div>
                 <div class="skill-group">
                     <h4>Languages</h4>
-                    <span class="skill-badge">Malay (C2)</span>
-                    <span class="skill-badge">English (C1)</span>
-                    <span class="skill-badge">Indonesian (C2)</span>
-                    <span class="skill-badge">Japanese (A2)</span>
-                    <span class="skill-badge">Korean (A1)</span>
-                    <span class="skill-badge">Arabit (A1)</span>
-                    <span class="skill-badge">Mandarin (A2</span>
-                    <span class="skill-badge">Sign Language (B1)</span>
+                    <span class="skill-badge">Malay (C2)</span><span class="skill-badge">English (C1)</span><span class="skill-badge">Indonesian (C2)</span><span class="skill-badge">Japanese (A2)</span><span class="skill-badge">Korean (A1)</span><span class="skill-badge">Arabit (A1)</span><span class="skill-badge">Mandarin (A2)</span><span class="skill-badge">Sign Language (B1)</span>
                 </div>
             </div>
 
             <div class="glass-card">
-                 <div class="about-section-title"><i class="fab fa-github"></i> GitHub Activity</div>
-                 <div class="github-graph-container">
-                     <img src="https://github-readme-activity-graph.vercel.app/graph?username=farhanaidil2026-ui&theme=github-compact&hide_border=true&area=true" alt="GitHub Activity Graph">
-                 </div>
+                <div class="about-section-title"><i class="fab fa-github"></i> GitHub Activity</div>
+                <div class="github-graph-container">
+                    <img src="https://github-readme-activity-graph.vercel.app/graph?username=farhanaidil2026-ui&theme=github-compact&hide_border=true&area=true" alt="GitHub Activity Graph">
+                </div>
             </div>
         </section>
 
+        <!-- ══════════════════════ COURSEWORK ══════════════════════ -->
         <section id="coursework" class="page-section">
-            <div class="section-header">
-                <h2>Academic Archive</h2>
-            </div>
+            <div class="section-header"><h2>Academic Archive</h2></div>
 
             <div class="year-tabs">
-                <button class="year-btn active" onclick="openYear(event, 'year1')">Year 1</button>
-                <button class="year-btn" onclick="openYear(event, 'year2')">Year 2</button>
-                <button class="year-btn" onclick="openYear(event, 'year3')">Year 3</button>
-                <button class="year-btn" onclick="openYear(event, 'year4')">Year 4</button>
+                <button class="year-btn active" onclick="openYear(event, 'cw-year1')">Year 1</button>
+                <button class="year-btn" onclick="openYear(event, 'cw-year2')">Year 2</button>
+                <button class="year-btn" onclick="openYear(event, 'cw-year3')">Year 3</button>
+                <button class="year-btn" onclick="openYear(event, 'cw-year4')">Year 4</button>
             </div>
 
-            <div id="year1" class="year-content active">
+            <div id="cw-year1" class="year-content active">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
                     <div class="subject-grid">
@@ -576,8 +527,6 @@
                         </div>
                     </div>
 
-            <div id="year1" class="year-content active">
-                <div class="glass-card">
                     <div class="semester-title">Semester 2</div>
                     <div class="subject-grid">
                         <div class="subject-card">
@@ -617,182 +566,245 @@
                             <a href="https://github.com/farhanaidil2026-ui/Year1-Sem1-Courses/tree/main/ULRS1032-Integrity%20and%20Anti-Corruption" target="_blank" class="subject-link"><i class="fab fa-github"></i> View Repo</a>
                         </div>
                     </div>
-
-
-            <div id="year2" class="year-content">
-                <div class="glass-card">
-                    <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 2.*</p>
-                        </div>
-                    </div>
-                    <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 2.*</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <div id="year3" class="year-content">
+            <div id="cw-year2" class="year-content">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 3.*</p>
-                        </div>
-                    </div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 2.*</p></div></div>
                     <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 3.*</p>
-                        </div>
-                    </div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 2.*</p></div></div>
                 </div>
             </div>
 
-            <div id="year4" class="year-content">
+            <div id="cw-year3" class="year-content">
                 <div class="glass-card">
                     <div class="semester-title">Semester 1</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 4.*</p>
-                        </div>
-                    </div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 3.*</p></div></div>
                     <div class="semester-title">Semester 2</div>
-                    <div class="subject-grid">
-                        <div class="subject-card" style="opacity: 0.7;">
-                            <span class="subject-code">TBA</span>
-                            <div class="subject-name">Upcoming</div>
-                            <p class="subject-desc">*Content will be unlocked in Year 4.*</p>
-                        </div>
-                    </div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 3.*</p></div></div>
+                </div>
+            </div>
+
+            <div id="cw-year4" class="year-content">
+                <div class="glass-card">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 4.*</p></div></div>
+                    <div class="semester-title">Semester 2</div>
+                    <div class="subject-grid"><div class="subject-card" style="opacity:0.7;"><span class="subject-code">TBA</span><div class="subject-name">Upcoming</div><p class="subject-desc">*Content will be unlocked in Year 4.*</p></div></div>
                 </div>
             </div>
         </section>
 
+        <!-- ══════════════════════ PROJECTS ══════════════════════ -->
         <section id="projects" class="page-section">
-            <div class="section-header">
-                <h2>Projects & Reflections</h2>
+            <div class="section-header"><h2>Projects &amp; Reflections</h2></div>
+
+            <!-- Year selector tabs -->
+            <div class="year-tabs">
+                <button class="year-btn active" onclick="openYear(event, 'proj-year1')">Year 1</button>
+                <button class="year-btn" onclick="openYear(event, 'proj-year2')">Year 2</button>
+                <button class="year-btn" onclick="openYear(event, 'proj-year3')">Year 3</button>
+                <button class="year-btn" onclick="openYear(event, 'proj-year4')">Year 4</button>
             </div>
 
-            <div class="projects-grid">
-                <div class="glass-card project-card" onclick="openModal(1)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Untitled%20design.png" class="project-thumb" alt="Design Thinking Project">
-                        <h3>Design Thinking Project</h3>
-                        <p class="project-desc">System to regulate library and study space utilization @ UTM.</p>
+            <!-- ── Year 1 ── -->
+            <div id="proj-year1" class="year-content active">
+
+                <!-- Semester 1 — existing projects -->
+                <div class="semester-section">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="projects-grid">
+
+                        <div class="glass-card project-card" onclick="openModal(1)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Untitled%20design.png" class="project-thumb" alt="Design Thinking Project">
+                                <h3>Design Thinking Project</h3>
+                                <p class="project-desc">System to regulate library and study space utilization @ UTM.</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">Canva</span>
+                                <span class="skill-badge">Design Thinking</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card project-card" onclick="openModal(2)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Screenshot%202026-01-14%20224213.png" class="project-thumb" alt="E-Portfolio">
+                                <h3>E-Portfolio Website</h3>
+                                <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">HTML</span>
+                                <span class="skill-badge">CSS</span>
+                                <span class="skill-badge">JS</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card project-card" onclick="openModal(3)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2025-12-30_22-32-47.jpg" class="project-thumb" alt="ASEAN Quantum Summit">
+                                <h3>ASEAN Quantum Summit</h3>
+                                <p class="project-desc">Insights on quantum computing transforming Johor.</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">Research</span>
+                                <span class="skill-badge">Future Tech</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card project-card" onclick="openModal(4)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" class="project-thumb" alt="Industry Visit">
+                                <h3>Industry Visit</h3>
+                                <p class="project-desc">Exposure into real-world industry @ Johor Corporation (JCorp).</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">Soft-Skills</span>
+                                <span class="skill-badge">System Architecture</span>
+                                <span class="skill-badge">Business Management</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card project-card" onclick="openModal(5)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/lift.jpg" class="project-thumb" alt="Digital Logic Lift System">
+                                <h3>Digital Logic Lift System</h3>
+                                <p class="project-desc">Build a working lift system using binary codes.</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">DEEDS</span>
+                                <span class="skill-badge">Microsoft Excel</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card project-card" onclick="openModal(6)">
+                            <div>
+                                <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/integriti.jpg" class="project-thumb" alt="Integrity And Anti-Corruption">
+                                <h3>Integrity And Anti-Corruption</h3>
+                                <p class="project-desc">A play showcasing the importance of integrity in daily life.</p>
+                            </div>
+                            <div>
+                                <span class="skill-badge">Capcut</span>
+                                <span class="skill-badge">Photoshop</span>
+                                <span class="skill-badge">Acting</span>
+                                <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div>
-                        <span class="skill-badge">Canva</span>
-                        <span class="skill-badge">Design Thinking</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                </div><!-- /sem1 -->
+
+                <!-- Semester 2 — placeholder -->
+                <div class="semester-section">
+                    <div class="semester-title">Semester 2</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 1 Semester 2 will appear here.</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="glass-card project-card" onclick="openModal(2)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/Screenshot%202026-01-14%20224213.png" class="project-thumb" alt="E-Portfolio">
-                        <h3>E-Portfolio Website</h3>
-                        <p class="project-desc">A compilation of projects and reflections (The site you are on now).</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">HTML</span>
-                        <span class="skill-badge">CSS</span>
-                        <span class="skill-badge">JS</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+            </div><!-- /proj-year1 -->
+
+            <!-- ── Year 2 ── -->
+            <div id="proj-year2" class="year-content">
+                <div class="semester-section">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 2 Semester 1 will appear here.</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="glass-card project-card" onclick="openModal(3)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2025-12-30_22-32-47.jpg" class="project-thumb" alt="ASEAN Quantum Summit">
-                        <h3>ASEAN Quantum Summit</h3>
-                        <p class="project-desc">Insights on quantum computing transforming Johor.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">Research</span>
-                        <span class="skill-badge">Future Tech</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
+                <div class="semester-section">
+                    <div class="semester-title">Semester 2</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 2 Semester 2 will appear here.</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="glass-card project-card" onclick="openModal(4)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" class="project-thumb" alt="Timetable Optimizer">
-                        <h3>Industry Visit</h3>
-                        <p class="project-desc">Exposure into real-world industry @ Johor Corporation (JCorp).</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">Soft-Skills</span>
-                        <span class="skill-badge">System Architecture</span>
-                        <span class="skill-badge">Business Management</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
-                </div>
-
-                <div class="glass-card project-card" onclick="openModal(5)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/lift.jpg" class="project-thumb" alt="Coursework Snippets">
-                        <h3>Digital Logic Lift System</h3>
-                        <p class="project-desc">Build a working lift system using binary codes.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">DEEDS</span>
-                        <span class="skill-badge">Microsoft Excel</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
-                </div>
-
-                <div class="glass-card project-card" onclick="openModal(6)">
-                    <div>
-                        <img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/integriti.jpg" class="project-thumb" alt="Data Viz">
-                        <h3>Integrity And Anti-Corruption</h3>
-                        <p class="project-desc">A play showcasing the importance of integrity in daily life.</p>
-                    </div>
-                    <div>
-                        <span class="skill-badge">Capcut</span>
-                        <span class="skill-badge">Photoshop</span>
-                        <span class="skill-badge">Acting</span>
-                        <div class="click-hint">Click to read reflection <i class="fas fa-arrow-right"></i></div>
-                    </div>
-                </div>
-
             </div>
 
+            <!-- ── Year 3 ── -->
+            <div id="proj-year3" class="year-content">
+                <div class="semester-section">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 3 Semester 1 will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="semester-section">
+                    <div class="semester-title">Semester 2</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 3 Semester 2 will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Year 4 ── -->
+            <div id="proj-year4" class="year-content">
+                <div class="semester-section">
+                    <div class="semester-title">Semester 1</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 4 Semester 1 will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="semester-section">
+                    <div class="semester-title">Semester 2</div>
+                    <div class="projects-grid">
+                        <div class="glass-card project-card project-card-upcoming">
+                            <div class="project-thumb-placeholder"><i class="fas fa-lock"></i></div>
+                            <h3>Upcoming Project</h3>
+                            <p class="project-desc">Projects from Year 4 Semester 2 will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub promo -->
             <div class="github-promo glass-card">
                 <i class="fab fa-github github-icon-large"></i>
                 <h3>Want to see more code?</h3>
                 <p>These are just the highlights. Check out my GitHub profile to see all my repositories, side projects, and assignments.</p>
-                <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="cta-btn">
-                    Visit My GitHub
-                </a>
+                <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="cta-btn">Visit My GitHub</a>
             </div>
         </section>
 
+        <!-- ══════════════════════ CONTACT ══════════════════════ -->
         <section id="contact" class="page-section">
-            <div class="section-header">
-                <h2>Get In Touch</h2>
-            </div>
+            <div class="section-header"><h2>Get In Touch</h2></div>
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <a href="mailto:farhanaidil2026@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
                     <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
                     <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-link"><i class="fab fa-github"></i><span>GitHub</span></a>
                 </div>
-
                 <div class="glass-card">
                     <div class="contact-content-box">
                         <div class="contact-visual"></div>
@@ -801,7 +813,7 @@
                                 <div class="form-group"><label>Name</label><input type="text" class="form-control"></div>
                                 <div class="form-group"><label>Email</label><input type="email" class="form-control"></div>
                                 <div class="form-group"><label>Message</label><textarea rows="5" class="form-control"></textarea></div>
-                                <button class="cta-btn" style="width: 100%;">Send Message</button>
+                                <button class="cta-btn" style="width:100%;">Send Message</button>
                             </form>
                         </div>
                     </div>
@@ -810,51 +822,45 @@
         </section>
     </main>
 
+    <!-- ══════════════════════ MODAL ══════════════════════ -->
     <div id="project-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal(event)">&times;</span>
             <img id="modal-image" class="modal-img" src="" alt="Project Image">
             <div class="modal-body">
-                <h2 id="modal-title" class="modal-title" style="text-align: left; border: none; margin: 0; box-shadow: none; left: 0; transform: none;">Project Title</h2>
+                <h2 id="modal-title" class="modal-title" style="text-align:left;border:none;margin:0;box-shadow:none;">Project Title</h2>
                 <div class="modal-subtitle">Summary</div>
-                <p id="modal-summary" class="modal-text">Project summary goes here.</p>
+                <p id="modal-summary" class="modal-text"></p>
                 <div class="modal-subtitle">Personal Reflection</div>
-                <p id="modal-reflection" class="modal-text">Personal reflection goes here.</p>
+                <p id="modal-reflection" class="modal-text"></p>
             </div>
         </div>
     </div>
 
     <script>
+        /* ── Page navigation ── */
         function showPage(pageId) {
-            if(!document.getElementById(pageId)) return;
+            if (!document.getElementById(pageId)) return;
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            const buttons = document.querySelectorAll('.nav-btn');
-            for(let btn of buttons) {
-                if(btn.textContent.trim().toLowerCase() === pageId) {
-                    btn.classList.add('active');
-                }
-            }
-            const mainContent = document.querySelector('main');
-            if(mainContent) {
-                mainContent.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent.trim().toLowerCase() === pageId) btn.classList.add('active');
+            });
+            document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        /* ── Year/Semester tabs (scoped to the active page section) ── */
         function openYear(evt, yearName) {
-            const yearContents = document.getElementsByClassName("year-content");
-            for (let i = 0; i < yearContents.length; i++) {
-                yearContents[i].classList.remove("active");
-            }
-            const yearBtns = document.getElementsByClassName("year-btn");
-            for (let i = 0; i < yearBtns.length; i++) {
-                yearBtns[i].classList.remove("active");
-            }
-            document.getElementById(yearName).classList.add("active");
-            evt.currentTarget.classList.add("active");
+            const clickedBtn = evt.currentTarget;
+            const section = clickedBtn.closest('.page-section');
+            section.querySelectorAll('.year-content').forEach(el => el.classList.remove('active'));
+            clickedBtn.closest('.year-tabs').querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(yearName).classList.add('active');
+            clickedBtn.classList.add('active');
         }
 
+        /* ── Project modal data ── */
         const projectData = {
             1: {
                 title: "Design Thinking Project",
@@ -910,83 +916,57 @@
             }
         }
 
+        /* ── Matrix background ── */
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
-        const matrixColor = '#00ff41';
-
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-
-        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/-+*';
-        const charArray = chars.split('');
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/-+*'.split('');
         const fontSize = 15;
         let columns = Math.floor(canvas.width / fontSize);
-        let drops = [];
-        for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
-
+        let drops = Array.from({ length: columns }, () => Math.random() * -50);
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillStyle = 'rgba(5,5,5,0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = matrixColor;
+            ctx.fillStyle = '#00ff41';
             ctx.font = fontSize + 'px monospace';
-
             if (Math.floor(canvas.width / fontSize) !== columns) {
                 columns = Math.floor(canvas.width / fontSize);
-                drops = [];
-                for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -50; }
+                drops = Array.from({ length: columns }, () => Math.random() * -50);
             }
-            for (let i = 0; i < drops.length; i++) {
-                const text = charArray[Math.floor(Math.random() * charArray.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
+            drops.forEach((d, i) => {
+                ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, d * fontSize);
+                if (d * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
                 drops[i]++;
-            }
+            });
         }
         setInterval(drawMatrix, 40);
 
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { document.getElementById('project-modal').style.display = 'none'; } });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('project-modal').style.display = 'none'; });
 
+        /* ── Hacker text effect ── */
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         let interval = null;
-
         function startHackerEffect(element) {
             let iteration = 0;
-            const originalText = element.dataset.value; 
-            
+            const originalText = element.dataset.value;
             clearInterval(interval);
-            
             interval = setInterval(() => {
-                element.innerText = originalText
-                    .split("")
-                    .map((letter, index) => {
-                        if(letter === " ") return " ";
-                        
-                        if(index < iteration) {
-                            return originalText[index];
-                        }
-                        return letters[Math.floor(Math.random() * 36)];
-                    })
-                    .join("");
-                
-                if(iteration >= originalText.length) { 
-                    clearInterval(interval);
-                }
-                
+                element.innerText = originalText.split("").map((letter, index) => {
+                    if (letter === " ") return " ";
+                    if (index < iteration) return originalText[index];
+                    return letters[Math.floor(Math.random() * 36)];
+                }).join("");
+                if (iteration >= originalText.length) clearInterval(interval);
                 iteration += 1 / 3;
             }, 30);
         }
-
         document.addEventListener("DOMContentLoaded", () => {
             const heading = document.querySelector("h1 span.highlight");
-            
-            if(heading) {
+            if (heading) {
                 heading.dataset.value = heading.innerText;
-                
-                heading.addEventListener("mouseover", event => {
-                    startHackerEffect(event.target);
-                });
-                
+                heading.addEventListener("mouseover", e => startHackerEffect(e.target));
                 startHackerEffect(heading);
             }
         });
