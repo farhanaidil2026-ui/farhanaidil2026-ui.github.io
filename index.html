@@ -6,6 +6,15 @@
     <title>Aidil Farhan | Data Engineering</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ════════════════════════════════════════
+           GLOBAL THEME VARIABLES
+           Change these to restyle the whole site at once.
+           --primary        = the main green accent colour
+           --bg-color       = page background
+           --card-bg        = card/panel background
+           --text-main      = default body text colour
+           --text-muted     = secondary / hint text colour
+           ════════════════════════════════════════ */
         :root {
             --bg-color: #050505;
             --card-bg: rgba(20, 20, 20, 0.85);
@@ -214,6 +223,21 @@
         }
         .semester-title:first-child { margin-top: 0; }
 
+        /* ── Life @ UTM semester tabs ──
+           These mirror the .year-tabs style but are scoped to the gallery.
+           .life-sem-tabs    = the row of tab buttons
+           .life-sem-content = each semester's photo grid (hidden by default)
+           .life-sem-content.active = the currently visible semester
+        ── */
+        .life-sem-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        .life-sem-content { display: none; animation: fadeIn 0.5s; }
+        .life-sem-content.active { display: block; }
+
         /* ── Coursework ── */
         .subject-grid {
             display: grid;
@@ -411,20 +435,63 @@
             </div>
 
             <div class="glass-card">
+                <!-- ── Life @ UTM section title ── -->
                 <div class="about-section-title"><i class="fas fa-camera-retro"></i> Life @ UTM</div>
-                <p style="margin-bottom: 15px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
-                <div class="gallery-grid">
-                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-20_17-07-40.jpg?raw=true" alt="Campus Activity"></div>
-                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-20_17-07-40.jpg?raw=true" alt="UTM Event"></div>
-                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-20_17-07-40.jpg?raw=true" alt="Study Session"></div>
-                    <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/profile.jpg?raw=true" alt="Personal Profile"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_4_2026-01-14_22-27-08.jpg" alt="Coding Session"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" alt="Event"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_2_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
-                    <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-26-32.jpg" alt="Gallery New"></div>
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Snapshots from my journey as a student.</p>
+
+                <!-- ── Semester tab buttons ──
+                     To add a new semester: 
+                     1. Copy one <button> below and change the label + the ID in onclick (e.g. 'life-sem5')
+                     2. Add a matching <div id="life-sem5" class="life-sem-content"> block further below
+                ── -->
+                <div class="life-sem-tabs">
+                    <button class="year-btn active" onclick="openLifeSem(event, 'life-sem1')">Semester 1</button>
+                    <button class="year-btn" onclick="openLifeSem(event, 'life-sem2')">Semester 2</button>
+                    <button class="year-btn" onclick="openLifeSem(event, 'life-sem3')">Semester 3</button>
+                    <button class="year-btn" onclick="openLifeSem(event, 'life-sem4')">Semester 4</button>
+                    <!-- Add more semester buttons here as needed -->
                 </div>
+
+                <!-- ── Semester 1 gallery ──
+                     To add a picture: copy any <div class="gallery-item"> line,
+                     paste it here, and swap in your new image URL and alt text.
+                ── -->
+                <div id="life-sem1" class="life-sem-content active">
+                    <div class="gallery-grid">
+                        <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_4_2026-01-20_17-07-40.jpg?raw=true" alt="Campus Activity"></div>
+                        <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_3_2026-01-20_17-07-40.jpg?raw=true" alt="UTM Event"></div>
+                        <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/photo_2_2026-01-20_17-07-40.jpg?raw=true" alt="Study Session"></div>
+                        <div class="gallery-item"><img src="https://github.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/blob/main/Images/profile.jpg?raw=true" alt="Personal Profile"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_5_2026-01-14_22-27-08.jpg" alt="Campus Life"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_4_2026-01-14_22-27-08.jpg" alt="Coding Session"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_3_2026-01-14_22-27-08.jpg" alt="Event"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_2_2026-01-14_22-27-08.jpg" alt="Group Study"></div>
+                        <div class="gallery-item"><img src="https://raw.githubusercontent.com/farhanaidil2026-ui/farhanaidil2026-ui.github.io/main/Images/photo_1_2026-01-18_21-26-32.jpg" alt="Gallery New"></div>
+                        <!-- Add Semester 1 photos below this line -->
+                    </div>
+                </div>
+
+                <!-- ── Semester 2 gallery ──
+                     Replace the placeholder paragraph with <div class="gallery-item"> images when ready.
+                ── -->
+                <div id="life-sem2" class="life-sem-content">
+                    <p style="color: var(--text-muted); padding: 20px 0;">📸 Photos from Semester 2 will appear here. Add your images above.</p>
+                    <!-- Add Semester 2 photos below this line -->
+                </div>
+
+                <!-- ── Semester 3 gallery ── -->
+                <div id="life-sem3" class="life-sem-content">
+                    <p style="color: var(--text-muted); padding: 20px 0;">📸 Photos from Semester 3 will appear here. Add your images above.</p>
+                    <!-- Add Semester 3 photos below this line -->
+                </div>
+
+                <!-- ── Semester 4 gallery ── -->
+                <div id="life-sem4" class="life-sem-content">
+                    <p style="color: var(--text-muted); padding: 20px 0;">📸 Photos from Semester 4 will appear here. Add your images above.</p>
+                    <!-- Add Semester 4 photos below this line -->
+                </div>
+
             </div>
 
             <div class="exp-grid">
@@ -801,7 +868,7 @@
             <div class="section-header"><h2>Get In Touch</h2></div>
             <div class="contact-wrapper">
                 <div class="contact-info">
-                    <a href="mailto:farhanaidil2026@gmail.com" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
+                    <a href="/cdn-cgi/l/email-protection#650304170d040b040c010c0957555753250208040c094b060a08" class="contact-link"><i class="fas fa-envelope"></i><span>Email</span></a>
                     <a href="https://linkedin.com/in/aidil-farhan-475589396/" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
                     <a href="https://github.com/farhanaidil2026-ui" target="_blank" class="contact-link"><i class="fab fa-github"></i><span>GitHub</span></a>
                 </div>
@@ -837,8 +904,12 @@
         </div>
     </div>
 
-    <script>
-        /* ── Page navigation ── */
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        /* ── Page navigation ──
+           showPage(pageId) hides all .page-section divs and shows only the one
+           whose id matches pageId (e.g. 'home', 'about', 'coursework', 'projects', 'contact').
+           It also updates the active highlight on the nav buttons.
+        ── */
         function showPage(pageId) {
             if (!document.getElementById(pageId)) return;
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
@@ -850,7 +921,11 @@
             document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* ── Year/Semester tabs (scoped to the active page section) ── */
+        /* ── Year/Semester tabs (used in Coursework and Projects sections) ──
+           openYear() switches between Year 1 / Year 2 / etc. tab panels.
+           It scopes its search to the parent .page-section so tabs on
+           different pages don't interfere with each other.
+        ── */
         function openYear(evt, yearName) {
             const clickedBtn = evt.currentTarget;
             const section = clickedBtn.closest('.page-section');
@@ -860,7 +935,29 @@
             clickedBtn.classList.add('active');
         }
 
-        /* ── Project modal data ── */
+        /* ── Life @ UTM semester tabs ──
+           openLifeSem() switches between Semester 1, 2, 3... in the gallery.
+           To add a new semester: 
+             1. Add a button in the HTML: <button class="year-btn" onclick="openLifeSem(event, 'life-sem5')">Semester 5</button>
+             2. Add a matching div:       <div id="life-sem5" class="life-sem-content"> ... </div>
+        ── */
+        function openLifeSem(evt, semId) {
+            const clickedBtn = evt.currentTarget;
+            /* Hide all semester content panels */
+            document.querySelectorAll('.life-sem-content').forEach(el => el.classList.remove('active'));
+            /* Deactivate all semester tab buttons */
+            clickedBtn.closest('.life-sem-tabs').querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+            /* Show the selected semester and mark its button active */
+            document.getElementById(semId).classList.add('active');
+            clickedBtn.classList.add('active');
+        }
+
+        /* ── Project modal data ──
+           Each key (1, 2, 3 …) maps to a project card's onclick="openModal(N)".
+           To add a new project:
+             1. Add a new entry here with a unique number key.
+             2. Add a matching <div class="glass-card project-card" onclick="openModal(N)"> in the HTML.
+        ── */
         const projectData = {
             1: {
                 title: "Design Thinking Project",
@@ -916,7 +1013,11 @@
             }
         }
 
-        /* ── Matrix background ── */
+        /* ── Matrix background animation ──
+           Draws the classic falling green characters on the background canvas.
+           Adjust `opacity` on #matrix-canvas in the CSS (currently 0.25) to make
+           it more or less visible. Change `fontSize` below to resize the characters.
+        ── */
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -945,7 +1046,11 @@
 
         document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('project-modal').style.display = 'none'; });
 
-        /* ── Hacker text effect ── */
+        /* ── Hacker text effect ──
+           Makes the name in the hero heading scramble through random characters
+           before resolving to the real text. Triggered on hover.
+           `letters` = the character pool used during the scramble.
+        ── */
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         let interval = null;
         function startHackerEffect(element) {
@@ -966,8 +1071,7 @@
             const heading = document.querySelector("h1 span.highlight");
             if (heading) {
                 heading.dataset.value = heading.innerText;
-                heading.addEventListener("mouseover", e => startHackerEffect(e.target));
-                startHackerEffect(heading);
+                heading.addEventListener("mouseover", () => startHackerEffect(heading));
             }
         });
     </script>
